@@ -49,45 +49,68 @@ currentpoint = Point(3,3)
 newpointamount = Point(0,0)
 realnumber = 1
 incrementamount = 0
-targetnumber = 23
+incrementedamount = 0
+targetnumber = 2
 
 #Calculate the new bit
-while realnumber <= targetnumber:
+while realnumber != targetnumber:
     #SpiralCode
 
     #I need to find some way to get it to count the inbetween numbers, perhaps more while statements?
-
-    PointFinale= originpoint + newpointamount
-    
-    #move right(Increment one)
     incrementamount += 1
-    currentpoint = currentpoint + Point(incrementamount,0)
-    realnumber += incrementamount
 
-    if realnumber >= targetnumber:
+    while incrementamount <= incrementedamount: #maybe something like this
+    #move right(Increment one)
+    #so basically keep the increment amount system but also use another system as well. It's also possible we could just abandon the coordinates altogether.
+      currentpoint += Point(1,0)
+      incrementedamount += 1
+      realnumber += 1     
+      print(currentpoint)
+
+    if realnumber == targetnumber:
       print(currentpoint)
       break
-
+  
+    incrementedamount = 0 #reset
+    
     #move up
-    currentpoint = currentpoint + Point(0,incrementamount)
-    realnumber += incrementamount
+    while incrementamount <= incrementedamount:
+      currentpoint = currentpoint + Point(0,1)
+      incrementedamount += 1
+      realnumber += 1
+      print(currentpoint)
 
-    if realnumber >= targetnumber:
+
+    if realnumber == targetnumber:
       print(currentpoint)
       break
+
+    incrementedamount = 0
+
+    incrementamount += 1 #tick more 
 
     #move left (increment by 1)
-    incrementamount += 1
-    currentpoint = currentpoint + Point(-incrementamount,0)
-    realnumber += incrementamount
+    while incrementamount <= incrementedamount:
+      incrementedamount += 1
+      currentpoint = currentpoint + Point(-1,0)
+      realnumber += 1
+      print(currentpoint)
 
-    if realnumber >= targetnumber: #should make these a function, etc.
+    if realnumber == targetnumber: #should make these a function, etc.
       print(currentpoint)
       break
 
+    incrementedamount = 0 #reset
+
     #move down 
-    currentpoint = currentpoint + Point(0,-incrementamount)
-    realnumber += incrementamount
+    while incrementamount <= incrementedamount:
+      incrementedamount += 1
+      currentpoint = currentpoint + Point(0,-1)
+      realnumber += 1
+
+    if realnumber == targetnumber: #should make these a function, etc.
+      print(currentpoint)
+      break
     
 print("realnumber",realnumber)
 print("Currentpoint",currentpoint)
