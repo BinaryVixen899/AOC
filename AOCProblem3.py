@@ -23,8 +23,7 @@
 
 # Your puzzle input is 277678.
 
-#Generate the Equation
-#1+1
+#----------------------------------------------------------------------------------------------------------------------------#
 
 #Class Code not mine
 class Point:
@@ -50,70 +49,89 @@ newpointamount = Point(0,0)
 realnumber = 1
 incrementamount = 0
 incrementedamount = 0
-targetnumber = 2
+targetnumber = 277678
 
 #Calculate the new bit
 while realnumber != targetnumber:
-    #SpiralCode
+    #SpiralCode 
 
+    incrementedamount = 0 #reset
     #I need to find some way to get it to count the inbetween numbers, perhaps more while statements?
     incrementamount += 1
+    print("test")
 
-    while incrementamount <= incrementedamount: #maybe something like this
+    while incrementamount != incrementedamount: #maybe something like this
     #move right(Increment one)
     #so basically keep the increment amount system but also use another system as well. It's also possible we could just abandon the coordinates altogether.
       currentpoint += Point(1,0)
       incrementedamount += 1
       realnumber += 1     
-      print(currentpoint)
+      print("currentpoint after right move is", currentpoint)
 
-    if realnumber == targetnumber:
-      print(currentpoint)
-      break
-  
+      if realnumber == targetnumber:
+        print(currentpoint)
+        break
+
+    if realnumber == targetnumber: #should make these a function, etc.
+        print(currentpoint)
+        break
     incrementedamount = 0 #reset
-    
+
     #move up
-    while incrementamount <= incrementedamount:
+    while incrementamount != incrementedamount:
       currentpoint = currentpoint + Point(0,1)
       incrementedamount += 1
       realnumber += 1
-      print(currentpoint)
+      print("currentpoint after up move is", currentpoint)
 
-
-    if realnumber == targetnumber:
-      print(currentpoint)
-      break
+  
+      if realnumber == targetnumber:
+        print("currentpoint and program end",currentpoint)
+        break
+        
+    if realnumber == targetnumber: #should make these a function, etc.
+        print(currentpoint)
+        break
+    incrementedamount = 0 #reset
 
     incrementedamount = 0
 
     incrementamount += 1 #tick more 
 
-    #move left (increment by 1)
-    while incrementamount <= incrementedamount:
+    #move left (increment by 1) #this is the problem. it says while 2 does not = one
+    while incrementamount != incrementedamount:
       incrementedamount += 1
       currentpoint = currentpoint + Point(-1,0)
       realnumber += 1
       print(currentpoint)
 
-    if realnumber == targetnumber: #should make these a function, etc.
-      print(currentpoint)
-      break
+      if realnumber == targetnumber: #should make these a function, etc.
+        print(currentpoint)
+        break
 
+    if realnumber == targetnumber: #should make these a function, etc.
+        print(currentpoint)
+        break
     incrementedamount = 0 #reset
 
     #move down 
-    while incrementamount <= incrementedamount:
+    while incrementamount != incrementedamount:
       incrementedamount += 1
       currentpoint = currentpoint + Point(0,-1)
       realnumber += 1
 
+      if realnumber == targetnumber: #should make these a function, etc.
+        print(currentpoint)
+        break
+
     if realnumber == targetnumber: #should make these a function, etc.
-      print(currentpoint)
-      break
+        print(currentpoint)
+        break
     
-print("realnumber",realnumber)
-print("Currentpoint",currentpoint)
+    
+
+print("final realnumber is",realnumber)
+print("final Currentpoint is",currentpoint)
 
 #----------------#Thoughts-------------------------
 #It literally is the manhattan distance, it's (x,y - x,y!)
