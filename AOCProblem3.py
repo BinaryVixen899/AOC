@@ -181,7 +181,7 @@
 # and then, so basically "if center #?", right #, etc."
 #adjacent #s for (5) list
 #FIGURED IT OUT. I NEED TO DEFINE RULES FOR ADJACENCY 
-#Okay i'm officially /stuck/. I'm oing to go to the next problem. 
+#Okay i'm officially /stuck/. I'm going to go to the next problem. 
 
 # 1
 # 1 ? 
