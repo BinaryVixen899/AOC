@@ -563,6 +563,7 @@ for passphrase in passphrasecollection:
         
         currentitemstep += 1
 
+    fullbreak = "False"
 print("invalidcount", invalidcount)
 print(len(passphrasecollection))
 ##
