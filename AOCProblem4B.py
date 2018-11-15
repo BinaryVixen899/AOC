@@ -542,8 +542,8 @@ lpyubo dylpfb iehwug decj ntidy cuygyg lalkb iutu oxgm imn"""
 # abcde xyz ecdab 
 # a ab abc abd abf abj 
 # iiii oiii ooii oooi oooo 
-# oiii ioii iioi iiio"""
-
+# oiii ioii iioi iiio
+# esajup huo oju ouj ujo"""
 
 
 currentitem = ""
@@ -569,26 +569,28 @@ for passphraserow in passphrasecollection:
     print("newpassphraserow",newpassphraserow)
     
     currentitemstep = 0 
-    
+    fullbreak = "false"
+
     for word in newpassphraserow: 
         currentitem = word
         print("Currentword",word)
+        print("currentitem",currentitem)
+        
         for word in newpassphraserow[currentitemstep + 1:]:
+            print("Wordafter adjustment",word)
+            print("Currentitem after adjustment",currentitem)
             if word == currentitem:
                 print ("Current passphrase is", word)
                 print("INVALID")
                 invalidcount+= 1
                 fullbreak = True
                 break
-            
-            if fullbreak == True:
-                break
-        
-            currentitemstep += 1
-        
+    
         if fullbreak == True:
             break
-    
+            
+        currentitemstep += 1
+
     
     newpassphraserow = []   
 
@@ -597,4 +599,6 @@ print("totalcount",totalcount)
 # print("invalidcount", invalidcount)
 # print(len(passphrasecollection))
 # ##
+
+####FULLBREAKNEVERTURNSOFFTHATSWHYOHMYGOSH
 
