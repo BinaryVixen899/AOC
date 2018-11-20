@@ -39,15 +39,15 @@ coordinatelength = len(values)
 #---Programs---#
 print("Current Position",currentposition)
 print("Coordinate Value", coordinatevalue)
-def CoordinateIncrement ():
-    global coordinatevalue 
-    coordinatevalue = coordinatevalue + 1
+def CoordinateIncrement (value):
+    coordinatevalue = value + 1
     print("test",coordinatevalue)
+    return coordinatevalue
    
 #Coordinate Calculation
 
 #-----Coordinate Move----_#
 currentcoordinate = currentcoordinate + currentcoordinate
-CoordinateIncrement()
+coordinatevalue = CoordinateIncrement(coordinatevalue)
 print ("coordinate value", coordinatevalue)
 
