@@ -28,12 +28,24 @@
 # How many steps does it take to reach the exit?
 
 #---Variables---#
-currentposition = 0
+#Okay I need to really think about how I'm defining things here
 values = [0,3,0,1,-3]
 lastcoordinate = [0]
 currentcoordinate = values[0]
 coordinatevalue = values[0]
+currentposition = 0
 coordinatelength = len(values)
+
 #---Programs---#
 print("Current Position",currentposition)
+print("Coordinate Value", coordinatevalue)
+def CoordinateIncrement (coordinatevalue): 
+    coordinatevalue = coordinatevalue + 1
+    print("test",coordinatevalue)
+#Coordinate Calculation
+
+#-----Coordinate Move----_#
+currentcoordinate = currentcoordinate + currentcoordinate
+CoordinateIncrement(coordinatevalue)
+print ("coordinate value", coordinatevalue)
 
