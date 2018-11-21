@@ -30,24 +30,49 @@
 #---Variables---#
 #Okay I need to really think about how I'm defining things here
 values = [0,3,0,1,-3]
-lastcoordinate = [0]
-currentcoordinate = values[0]
-coordinatevalue = values[0]
+
+#initialization
 currentposition = 0
+coordinatevalue = values[currentposition]
+step = 0
+
 coordinatelength = len(values)
 
 #---Programs---#
-print("Current Position",currentposition)
-print("Coordinate Value", coordinatevalue)
-def CoordinateIncrement (value):
-    coordinatevalue = value + 1
-    print("test",coordinatevalue)
-    return coordinatevalue
-   
+#need a coordinate increment AND a value increment, heck and a move one too but the move should go down in coordinate move 
+# def CoordinateIncrement (value):
+#     coordinatevalue = value + 1
+#     return coordinatevalue
+
+
 #Coordinate Calculation
 
 #-----Coordinate Move----_#
-currentcoordinate = currentcoordinate + currentcoordinate
-coordinatevalue = CoordinateIncrement(coordinatevalue)
-print ("coordinate value", coordinatevalue)
+print("start")
+print("coordinatevalue",coordinatevalue)
+print("currentposition",currentposition)
+
+while currentposition <=4:
+
+    if currentposition <=4:
+        #Increment
+        values[currentposition] = values[currentposition] + 1
+    else:
+        break
+    
+    #Position Move
+    currentposition = currentposition + values[currentposition]
+    
+    step += 1
+    print("step",step)
+    
+    print("coordinatevalue",coordinatevalue)
+    print("currentposition",currentposition)
+    
+
+    
+    
+#<------------------ #here we go, coordinvate value is not changing the actual value of the list, which is the problem
+
+
 
