@@ -35,7 +35,6 @@ values = [0,3,0,1,-3]
 currentposition = 0
 coordinatevalue = values[currentposition]
 step = 0
-
 coordinatelength = len(values)
 
 #---Programs---#
@@ -47,21 +46,26 @@ coordinatelength = len(values)
 
 #Coordinate Calculation
 
-#-----Coordinate Move----_#
+#-----Coordinate Move-----#
 print("start")
 print("coordinatevalue",coordinatevalue)
 print("currentposition",currentposition)
 
 while currentposition <=4:
-
+    print(values[currentposition])
+    currentposition = currentposition + values[currentposition]
+    
+    #It should attempt to move first
+    
     if currentposition <=4:
         #Increment
         values[currentposition] = values[currentposition] + 1
     else:
+        print("Break")
         break
     
     #Position Move
-    currentposition = currentposition + values[currentposition]
+    
     
     step += 1
     print("step",step)
@@ -70,7 +74,7 @@ while currentposition <=4:
     print("currentposition",currentposition)
     
 
-    
+#okay i am doing something wrong here
     
 #<------------------ #here we go, coordinvate value is not changing the actual value of the list, which is the problem
 
