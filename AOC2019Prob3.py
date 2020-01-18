@@ -35,21 +35,43 @@
 
 # R75,D30,R83,U83,L12,D49,R71,U7,L72
 # U62,R66,U55,R34,D71,R55,D58,R83 = distance 159
-P
 # R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51
 # U98,R91,D20,R16,D67,R40,U7,R15,U6,R7 = distance 135
 # What is the Manhattan distance from the central port to the closest intersection?
 #  In a plane with p1 at (x1, y1) and p2 at (x2, y2), it is |x1 - x2| + |y1 - y2|.
 
-Firstwirepath = [R75,D30,R83,U83,L12,D49,R71,U7,L72]
-secondwirepath = [U62,R66,U55,R34,D71,R55,D58,R83]
-pointa1 = 0 
-pointa2 = 0 
-point b1 = 0 
-point b2 = 0
+firstwirepath = ['R75','D30','R83','U83','L12','D49','R71','U7','L72']
+secondwirepath = ['U62','R66','U55','R34','D71','R55','D58','R83']
 
-for x in Firstwirepath:
-    if
+firstwirepathworkingcoordinates = []
+currentxcoordinate = 0
+currentycoordinate = 0
 
-if (pointa1  == point b1 and pointa2 ==b2):
-    crossoverpoints.append[pointa1]
+for x in firstwirepath:
+    if x[0] == 'L':
+        x = x.strip('L')
+        firstwirepathworkingcoordinates.append(int(x) * -1)
+        currentxcoordinate = currentxcoordinate + x
+        exit()
+    elif x[0] == 'R':
+        x = x.strip('R')
+        currentxcoordinate = currentxcoordinate + x lambdx
+        firstwirepathworkingcoordinates.append(x)
+    elif x[0] == 'D':
+        x = x.strip('D')
+        firstwirepathworkingcoordinates.append(x)
+
+    
+#     if x[0] == 'U':
+#         pass
+#     if x[0] == 'D':
+# pointa1 = 0
+# pointa2 = 0 
+# pointb1 = 0 
+# pointb2 = 0
+
+# for x in firstwirepath:
+#     if
+
+# if (pointa1  == point b1 and pointa2 ==b2):
+#     crossoverpoints.append[pointa1]
