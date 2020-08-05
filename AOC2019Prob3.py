@@ -5,6 +5,8 @@
 
 # The wires twist and turn, but the two wires occasionally cross paths. To fix the circuit, you need to find the intersection point closest to the central port. Because the wires are on a grid, use the Manhattan distance for this measurement. While the wires do technically cross right at the central port where they both start, this point does not count, nor does a wire count as crossing with itself.
 
+# Manhattan distance. Definition: The distance between two points measured along axes at right angles. In a plane with p1 at (x1, y1) and p2 at (x2, y2), it is |x1 - x2| + |y1 - y2|. Lm distance.
+
 # For example, if the first wire's path is R8,U5,L5,D3, then starting from the central port (o), it goes right 8, up 5, left 5, and finally down 3:
 
 # ...........
@@ -35,18 +37,15 @@
 
 # R75,D30,R83,U83,L12,D49,R71,U7,L72
 # U62,R66,U55,R34,D71,R55,D58,R83 = distance 159
-<<<<<<< HEAD
 
-=======
->>>>>>> 08074ab64e43f649258c661a56a1c24687b4b307
 # R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51
 # U98,R91,D20,R16,D67,R40,U7,R15,U6,R7 = distance 135
+
 # What is the Manhattan distance from the central port to the closest intersection?
 #  In a plane with p1 at (x1, y1) and p2 at (x2, y2), it is |x1 - x2| + |y1 - y2|.
 
-<<<<<<< HEAD
-firstwirepath = [R75,D30,R83,U83,L12,D49,R71,U7,L72]
-secondwirepath = [U62,R66,U55,R34,D71,R55,D58,R83]
+firstwirepath = ['R75','D30','R83','U83','L12','D49','R71','U7','L72']
+secondwirepath = ['U62','R66','U55','R34','D71','R55','D58','R83']
 firstwirepathrefined=[]
 secondwirepathrefined=[]
 pointax = 0 
@@ -57,14 +56,14 @@ currentpointa = 0
 currentpointb = 0
 
 for x in firstwirepath:
-    if x[1] == R:
-        x[1]
+    if x[1] == 'R':
         firstwirepathrefined.append(x)
-    elif x[1] == L: 
+    elif x[1] == 'L': 
+        x[1] = x[1] * -1
         firstwirepathrefined.append(-x[1])
-    elif x[1] == U:
+    elif x[1] == 'U':
         firstwirepathrefined.append(x)
-    elif x[1] == D:
+    elif x[1] == 'D':
         firstwirepathrefined.append(-x[1])
 
 for x in firstwirepath:
@@ -81,7 +80,6 @@ for x in secondwirepath:
 if (currentpointa == currentpointb):
     xdistance = pointax - pointay 
     ydistane
-=======
 # firstwirepath = ['R75','D30','R83','U83','L12','D49','R71','U7','L72']
 # secondwirepath = ['U62','R66','U55','R34','D71','R55','D58','R83']
 
@@ -117,4 +115,3 @@ if (currentpointa == currentpointb):
 
 # if (pointa1  == point b1 and pointa2 ==b2):
 #     crossoverpoints.append[pointa1]
->>>>>>> 08074ab64e43f649258c661a56a1c24687b4b307
