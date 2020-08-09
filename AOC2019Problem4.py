@@ -16,8 +16,58 @@
 
 # Your puzzle input is 367479-893698.
 
-inputvalue = '367479-893698'
+# inputvalue = '367479-893698'
 
-for i in range(367479,893698):
-    for x in i:
-        
+
+
+
+# 111111 meets these criteria (double 11, never decreases).
+# 223450 does not meet these criteria (decreasing pair of digits 50).
+# 123789 does not meet these criteria (no double).
+
+datatest =[]
+
+for i in range(100, 200):
+    datatest.append(([str(i)]))
+
+
+# for i in datatest:  
+#     for a in i:
+#         datatest.append(a)
+
+
+
+print(datatest)
+#Criteria 
+data = [1,2,3,4,3]
+lastentry='null'
+print(len(data))
+bothconditionspassed = False
+success=0
+
+for entry in data[0:len(data)]:
+    print('entry \n' + str(entry))
+    print('lastentry \n' + str(lastentry))
+    if lastentry == 'null': 
+        lastentry = entry
+        continue
+    else:
+        if entry >= lastentry:
+            if lastentry == entry: 
+                bothconditionspassed = True
+                lastentry = entry
+                continue
+            else:
+                lastentry = entry
+                continue
+        else:
+            print('failure')
+            break
+
+if bothconditionspassed:
+    print("sucess!")
+    success +=1
+else:
+    print("Failure")
+       
+            
