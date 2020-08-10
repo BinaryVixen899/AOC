@@ -18,56 +18,65 @@
 
 # inputvalue = '367479-893698'
 
-
-
-
 # 111111 meets these criteria (double 11, never decreases).
 # 223450 does not meet these criteria (decreasing pair of digits 50).
 # 123789 does not meet these criteria (no double).
+success = 0
 
-datatest =[]
+def Calculate(data):
+    global success
+    lastentry='null'
+    bothconditionspassed = False
 
-for i in range(100, 200):
-    datatest.append(([str(i)]))
-
-
-# for i in datatest:  
-#     for a in i:
-#         datatest.append(a)
-
-
-
-print(datatest)
-#Criteria 
-data = [1,2,3,4,3]
-lastentry='null'
-print(len(data))
-bothconditionspassed = False
-success=0
-
-for entry in data[0:len(data)]:
-    print('entry \n' + str(entry))
-    print('lastentry \n' + str(lastentry))
-    if lastentry == 'null': 
-        lastentry = entry
-        continue
-    else:
-        if entry >= lastentry:
-            if lastentry == entry: 
-                bothconditionspassed = True
-                lastentry = entry
-                continue
-            else:
-                lastentry = entry
-                continue
+    for entry in data[0:len(data)]:
+        # print('entry \n' + str(entry))
+        # print('lastentry \n' + str(lastentry))
+        if lastentry == 'null': 
+            lastentry = entry
+            continue
         else:
-            print('failure')
-            break
+            if entry >= lastentry:
+                if lastentry == entry: 
+                    bothconditionspassed = True
+                    lastentry = entry
+                    continue
+                else:
+                    lastentry = entry
+                    continue
+            else:
+                # print('failure')
+                bothconditionspassed = False
+                break
 
-if bothconditionspassed:
-    print("sucess!")
-    success +=1
-else:
-    print("Failure")
-       
+    if bothconditionspassed == True:
+        # print("sucess!")
+        success = success + 1
+        # print('True')
+
             
+def digits(n):
+   # None, not corect for n <= 0
+   ret = []
+   while n > 0:
+        ret.append(n % 10)
+        n = n // 10
+   ret.reverse()
+   return ret
+
+datalist = [digits(k) for k in range(367479,893698)]
+
+
+for i in datalist:
+    Calculate(i)
+
+print(success)
+    
+
+
+
+
+
+
+
+
+
