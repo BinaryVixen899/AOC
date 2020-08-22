@@ -21,7 +21,11 @@
 # 111111 meets these criteria (double 11, never decreases).
 # 223450 does not meet these criteria (decreasing pair of digits 50).
 # 123789 does not meet these criteria (no double).
+from collections import Counter
 success = 0
+success2 =0
+
+
 
 def Calculate(data):
     global success
@@ -63,6 +67,45 @@ def digits(n):
    ret.reverse()
    return ret
 
+
+def Calculate2(data):
+    global success2
+    lastentry='null'
+    bothconditionspassed = False
+    
+
+    for entry in data[0:len(data)]:
+
+        
+                
+            #need something like that 
+    
+
+        # print('entry \n' + str(entry))
+        # print('lastentry \n' + str(lastentry))
+        if lastentry == 'null': 
+            lastentry = entry
+            continue
+        else:
+            if entry >= lastentry:
+                if lastentry == entry: 
+                    bothconditionspassed = True
+                    lastentry = entry
+                    continue
+                else:
+                    lastentry = entry
+                    continue
+            else:
+                # print('failure')
+                bothconditionspassed = False
+                break
+
+    if bothconditionspassed == True:
+        
+        # print("sucess!")
+        success2 = success2 + 1
+        # print('True')
+
 datalist = [digits(k) for k in range(367479,893698)]
 
 
@@ -72,11 +115,44 @@ for i in datalist:
 print(success)
     
 
+# An Elf just remembered one more important detail: the two adjacent matching digits are not part of a larger group of matching digits.
+
+# Given this additional criterion, but still ignoring the range rule, the following are now true:
+
+# 112233 meets these criteria because the digits never decrease and all repeated digits are exactly two digits long.
+# 123444 no longer meets the criteria (the repeated 44 is part of a larger group of 444).
+# 111122 meets the criteria (even though 1 is repeated more than twice, it still contains a double 22).
+# How many different passwords within the range given in your puzzle input meet all of the criteria?
 
 
 
 
+# for i in datalist2:
+#     Calculate2(i)
+
+print(success)  
+a = 0
+testdict ={}
+data = [digits(k) for k in range(367479,893698)]     
+datalist2 = [digits(k) for k in range(100,110)]
+for i in datalist2:
+    for a in [i]:
+        z = map(lambda x: x *2, a)
+        print(list(z))
 
 
 
+print(testdict)
 
+# for x in datadicttest:
+#     print(datadicttest)
+
+# print(datalist2)
+
+# for x in datadict.values():
+#             print(datadict)
+#             print(x)
+#             if x % 2 == 0:
+#                 print("okay")
+#             else:
+#                 break
