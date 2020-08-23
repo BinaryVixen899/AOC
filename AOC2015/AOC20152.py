@@ -10,26 +10,35 @@
 # All numbers in the elves' list are in feet. How many total square feet of wrapping paper should they order?
 import os 
 print(os.getcwd())
-os.chdir(r"C:\Users\Alexandria Leal\Documents\Coding\AOC\AOC2015")
-with open('AOC20152Input','r') as f:
+list = []
+value = 0 
+try:
+    os.chdir(r"C:\Users\Alexandria Leal\Documents\Coding\AOC\AOC2015")
+except:
+    #If you're wondering what hapepned here, I decided at some point to just code on my Ubuntu laptop for, who knows waht reason, so I went and di that 
+    os.chdir('./AOC/AOC2015/')
+    #In the real world I would, and you should, use an absolute path or such but well you know, I don't want my username being shown in this for Reasons 
+with open('AOC20152Input','r') as f:    
     for lin in f:
-        print(lin)
+        list.append(lin.strip('\n'))
 
-
+print(list)
 
 def MainFunction(l,w,h): 
     a = l*w
     b = w*h
-    c = h*l
+    c = h*l             
     return (2 * a) + (2 * b) + (2 * c) + min(a,b,c)
 
 
 
 input = ['2x3x4']
 
-for i in input: 
+for i in list: 
     testinput = i.split('x')
-    print(MainFunction(int(testinput[0]),int(testinput[1]),int(testinput[2])))
+    value += (MainFunction(int(testinput[0]),int(testinput[1]),int(testinput[2])))
+
+print(value)
 
 # for i in testinput: 
 #     l = i[a]
