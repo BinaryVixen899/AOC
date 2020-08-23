@@ -15,6 +15,8 @@ with open('AOC20152Input','r') as f:
     for lin in f:
         print(lin)
 
+
+
 def MainFunction(l,w,h): 
     a = l*w
     b = w*h
