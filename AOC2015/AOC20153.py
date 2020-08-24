@@ -12,3 +12,20 @@
 # ^v^v^v^v^v delivers a bunch of presents to some very lucky children at only 2 houses.
 # To begin, get your puzzle input.
 
+X = 0 
+presents = 0 
+INPUT = '^v^v^v^v^v'
+
+> 
+
+for entry in INPUT:
+    if entry == '>'
+    X+= 1
+    presents += > + 1 
+
+    elif entry == '<'
+
+    elif entry == '^'
+
+    elif entry == 'v'
+
