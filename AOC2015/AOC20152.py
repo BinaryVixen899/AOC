@@ -63,11 +63,15 @@ import os
 # Although it hasn't changed, you can still get your puzzle input.
 
 
-print(os.getcwd())
 mylist = []
 value = 0
 y = 0
 x = 0
+
+
+def Prob2 (
+    parameter_list):
+    pass
 try:
     os.chdir(r"C:\Users\Alexandria Leal\Documents\Coding\AOC\AOC2015")
 except:
@@ -85,9 +89,8 @@ newlist =[]
 [newlist.append(a) for a in [i.split('x') for i in mylist]]
 print(newlist)
 for a in newlist:
-    print(a)
-    for i in a: 
-        print(i)
+    print(a[1])
+    
 
 
 
