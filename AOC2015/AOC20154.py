@@ -17,28 +17,30 @@
 #Although it can still be optimize
 #Ultimately what we're doing here is figuring out the othe rhalf of a hash 
 
+#This is really inelegant
+#But hey it works 
+# --- Part Two ---
+# Now find one that starts with six zeroes.
+#Just change it between 5 zeros 6 zeros for part 2
 import hashlib
-lastresult = 1
+#So the key is making sure that this isn't one
 # mykey = bytes(mykey)
-for i in range(1,999999):
+for i in range(1,100000000000000):
     # print(i)
     test = 'bgvyzdsv' + str(i) 
     # print(test)
     test = bytes(test,encoding='utf8') 
     result = hashlib.md5(test)
     result = result.hexdigest()
-    print(result)
-    if '00000' == (result[0:5]):
-        if (i <= lastresult):
-            lastresult = i
-            # print("test")
-            continue
-        else:
-            continue
-    print(lastresult)
+    # print(result)
+    if '000000' == (result[0:6]):
+        print(result)
+        print(i)
+        quit()
+    # print(lastresult)
 #have this throw it out when we ge tthe lowest 
 
-print("lastresult is:" + str(lastresult))
+
 
 # use == instead of is not
     # print()hexdigest
