@@ -20,6 +20,7 @@
 
 import collections
 import re
+
 #vowels
 vowels = 'aeiou'
 # duplicates
@@ -35,14 +36,33 @@ testlist = []
 
 #Vowel count
 c = collections.Counter(puzzleinput)
-result = "".join(set(puzzleinput))
-for i in result:  #get unique value
-    print(f"letter {i} lettercount {c[i]}")
+# if c.keys() 
+# print(len(c.keys() in ('a','e','i','o','u')))
+mykeys = ('a','e','i','o','u')
+if any(k in mykeys for k in c.keys()):
+    print("yes")
+
+for g in c: #Probably could do for g in (vowels)
+    if g in ('a','e','i','o','u'):
+        if c[g] >= 3:
+            print("sucess")
+            break
+        else:
+            continue
+        
+        print('NOVOWELS')
+ 
+        
+
+
+#Ask about big O 
+
+# result = "".join(set(puzzleinput))
+# for i in result:  #get unique value
+#     print(f"letter {i} lettercount {c[i]}")
+
 #Perhaps delete key? if i not in 
 
-
- 
- 
 #Got a way to check for duplicates
 testlist = (re.findall(r'..', puzzleinput))
 for i in testlist:
