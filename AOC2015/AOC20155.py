@@ -29,3 +29,69 @@ for i in result:  #get unique value
 
 
 
+#so what if we just chunk this 
+#And do three operations for each
+
+import collections
+import re
+
+#vowels
+vowels = 'aeiou'
+# duplicates
+bad = ['ab','cd','pq','xy']
+
+puzzleinput = 'ugknbfddgicrmopn'
+testlist = []
+
+ 
+
+#Need vowels 
+#Need to put it all together 
+
+#Vowel count
+c = collections.Counter(puzzleinput)
+# if c.keys() 
+# print(len(c.keys() in ('a','e','i','o','u')))
+mykeys = ('a','e','i','o','u')
+if any(k in mykeys for k in c.keys()):
+    print("yes")
+
+for g in c: #Probably could do for g in (vowels)
+    if g in ('a','e','i','o','u'):
+        if c[g] >= 3:
+            print("sucess")
+            break
+        else:
+            continue
+        
+        print('NOVOWELS')
+ 
+        
+
+
+#Ask about big O 
+
+# result = "".join(set(puzzleinput))
+# for i in result:  #get unique value
+#     print(f"letter {i} lettercount {c[i]}")
+
+#Perhaps delete key? if i not in 
+
+#Got a way to check for duplicates
+testlist = (re.findall(r'..', puzzleinput))
+for i in testlist:
+    print(i)
+    if i[0] == i[1]:
+        print("yay")
+        hasduplicates = True
+        break
+
+for i in bad: #Okay so got a wayt to find the bad words
+    if i in puzzleinput:
+        print("hahano")
+        quit()
+    else:
+        print("yay")
+
+#Okay 
+# print(testlist)
