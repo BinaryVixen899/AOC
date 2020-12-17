@@ -14,3 +14,18 @@
 # haegwjzuvuyypxyu is naughty because it contains the string xy.
 # dvszwmarrgswjxmb is naughty because it contains only one vowel.
 # How many strings are nice?
+
+import collections
+input = 'ugknbfddgicrmopn'
+c = collections.Counter('ugknbfddgicrmopn')
+result = "".join(set(input))
+for i in result:  #get unique value
+    print(f"letter {i} lettercount {c[i]}")gbfrd c 
+
+
+
+
+
+
+
+
