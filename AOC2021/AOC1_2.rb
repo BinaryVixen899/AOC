@@ -34,6 +34,9 @@ array = [
 263
 ]
 
+array = File.readlines("data.txt", sep=$/)
+array.map!(&:to_i)
+binding.pry
 def getsum(anarray)
   for i in anarray
     puts i
@@ -46,8 +49,9 @@ while i < array.length
   arraya = array[i, 3]
   puts arraya
   # array a calculation and sum goes here
-  i += 2 
-  arrayb = arraya[1,2].push(array[i+1])
+  i += 1 
+  # binding.pry
+  arrayb = arraya[1,2].push(array[i+2])
   puts arrayb
   puts increasecount
   # binding.pry
@@ -56,7 +60,6 @@ while i < array.length
   end
   puts "increasecount is #{increasecount}"
   puts "arraya is #{arraya}"
-  arraya = []
   puts "arrayb is #{arrayb}"
   # check if the last three items in array b are equal to the last three items of the list, if they are then let's end this
   puts "i is #{i}"
