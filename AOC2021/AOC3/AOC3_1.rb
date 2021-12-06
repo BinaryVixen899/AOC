@@ -63,3 +63,4 @@ p gammaarray = gammaarray.join
 epsilonarray = epsilonarray.each {|x| x.to_s}
 epsilonarray = epsilonarray.join
 p epsilonarray.to_i(2) * gammaarray.to_i(2)
+#lets do 
