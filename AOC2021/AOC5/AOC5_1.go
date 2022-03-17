@@ -15,9 +15,9 @@ func main() {
 	p.Title.Text = "X"
 	p.Title.Text = "Y"
 
-	Parser()
+	pointslist, err := Parser()
 
-	err := plotutil.AddLines(p,
+	err = plotutil.AddLines(p,
 		"First", addPoints(0, 9, 5, 9),
 		// "Second", addPoints(8, 0, 0, 8),
 		// These need to be done programatically
