@@ -2,32 +2,35 @@ package main
 
 import (
 	"io/ioutil"
+	"strconv"
 	"strings"
 
-	"gonum.org/v1/plot"
-	"gonum.org/v1/plot/plotter"
-	"gonum.org/v1/plot/plotutil"
 	"gonum.org/v1/plot/vg"
 )
 
+// TODO: Make them all into one big list
+
 func main() {
-	p := plot.New()
-	p.Title.Text = "X"
-	p.Title.Text = "Y"
 
 	pointslist, err := Parser()
+	var noslopelist [][]float64
 
-	err = plotutil.AddLines(p,
-		"First", addPoints(0, 9, 5, 9),
-		// "Second", addPoints(8, 0, 0, 8),
-		// These need to be done programatically
-		"Third", addPoints(9, 4, 3, 4),
-		"Fourth", addPoints(2, 2, 2, 1),
-		"Fifth", addPoints(7, 0, 7, 4),
-		// "Sixth", addPoints(6, 4, 2, 0),
-		"Seventh", addPoints(0, 9, 2, 9))
-	// "Eight", addPoints(0, 0, 8, 8),
-	// "Ninth", addPoints(5, 5, 8, 2))
+	for i, p := range *pointslist {
+		s := make([]float64, 4)
+
+		s[0], err = strconv.ParseFloat(p[0], 64)
+		s[1], err = strconv.ParseFloat(p[1], 64)
+		s[2], err = strconv.ParseFloat(p[2], 64)
+		s[3], err = strconv.ParseFloat(p[3], 64)
+		result := slopeChecker(s[0], s[1], s[2], s[3])
+		if result == 0 {
+			noslopelist = append(noslopelist, s)
+			//QUESTION: How come I cannot do this?  *pointslist[i][i]
+			// oh well, if I can't remove from the list I'll just make a new list
+			// there has to be a way to edit it, perhaps call another function?
+		}
+
+	}
 
 	if err != nil {
 		panic(err)
@@ -40,21 +43,21 @@ func main() {
 	Parser()
 }
 
-func addPoints(sx float64, sy float64, fx float64, fy float64) plotter.XYs {
-	pts := make(plotter.XYs, 4)
-	for i := range pts {
-		if i == 0 || i == 1 {
-			pts[i].X = sx
-			pts[i].Y = sy
-		} else {
-			pts[i].X = fx
-			pts[i].Y = fy
-		}
+// func addPoints(sx float64, sy float64, fx float64, fy float64) plotter.XYs {
+// 	pts := make(plotter.XYs, 4)
+// 	for i := range pts {
+// 		if i == 0 || i == 1 {
+// 			pts[i].X = sx
+// 			pts[i].Y = sy
+// 		} else {
+// 			pts[i].X = fx
+// 			pts[i].Y = fy
+// 		}
 
-	}
-	return pts
+// 	}
+// 	return pts
 
-}
+// }
 
 func slopeChecker(sx float64, sy float64, fx float64, fy float64) int {
 	// Want to make sure that zero isn't what folks
@@ -104,8 +107,68 @@ func Parser() (*[][]string, error) {
 }
 
 func LineEnumerator(sx float64, sy float64, fx float64, fy float64) {
+	// Okay so what we need are 10 rows of numbers ending in 900
+	// these go from 0 to 900
+	// when there is nothing there we mark a ., otherwise increment number
+	// I think the most efficient way would be to print according to each line after eliminating slopes
+	// in fact hmm we should make an array of each
+	// no, print them all out first
+	// ugh that's so inefficent though
+	// frick it though let's just do it for now
+	// ugh in ruby you could just use cycle
+
+	// okay so we need to sort the lists
+
+	for i := 0; i < 1000; i++ {
+		// could check here for every i but ugh that would take FOREVER unless we're usinga
+		// GOT IT, we need to range over the ones already in it and just make everything else .s, duh
+		if i%100 == 0 {
+			// go that is not more legible why are you autosmushing it together
+			print("\n")
+		} else {
+			print(".")
+		}
+
+	}
 
 }
+func LineSorter(noslopelist *[][]float64) {
+
+	sorted := false
+
+	for sorted != true {
+		for i, v := range *noslopelist {
+			if i != 0 {
+				if v[0] < (*noslopelist)[i-1][0] {
+					(*noslopelist)[i-1], (*noslopelist)[i] = (*noslopelist)[i], (*noslopelist)[i-1]
+					// set to false here
+					sorted = false
+					continue
+				}
+				// this will only work if Go stops execution after the if statement
+				// I feel like this wont work at all
+				if i == len(*noslopelist)-1 {
+					sorted = true
+				}
+			}
+
+		}
+		// okay so what we would need to know here is on what level does this modify it
+
+	}
+}
+
+func LineCombiner(noslopelist *[][]float64) {
+	combinedlist := []int{}
+	for i, v := range *noslopelist {
+
+	}
+
+}
+
+// GATED OFF FOR NOTES:
+
+// Ugh, I've made a critical mistake. I should've perhaps combined the lists at the start but
 
 // I don't think this is how we solve this either. At least not efficiently
 
