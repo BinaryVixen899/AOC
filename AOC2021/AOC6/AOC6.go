@@ -1,6 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"encoding/csv"
+	"fmt"
+	"log"
+	"os"
+	"strconv"
+)
 
 type lanternfish struct {
 	timer int
@@ -21,6 +27,8 @@ type lanternfish struct {
 // Constructor, but bad in reality because there is ZERO way to force anyone to use it
 // In reality you can just not export the type but export an itnerface
 // WWID:
+
+// Building a lanternfish input parser
 
 func NewLanternFish() *lanternfish {
 	lf := lanternfish{}
@@ -51,13 +59,37 @@ func (lf *lanternfish) tick() {
 }
 
 func main() {
-	afish := &lanternfish{3, true, false, false}
-	secondfish := &lanternfish{4, false, false, false}
-	thirdfish := &lanternfish{3, false, false, false}
-	fourthfish := &lanternfish{1, false, false, false}
-	fifthfish := &lanternfish{2, false, false, false}
-	var fishes = []*lanternfish{afish, secondfish, thirdfish, fourthfish, fifthfish}
+	// afish := &lanternfish{3, true, false, false}
+	// secondfish := &lanternfish{4, false, false, false}
+	// thirdfish := &lanternfish{3, false, false, false}
+	// fourthfish := &lanternfish{1, false, false, false}
+	// fifthfish := &lanternfish{2, false, false, false}
+	// var fishes = []*lanternfish{afish, secondfish, thirdfish, fourthfish, fifthfish}
+	var fishes = []*lanternfish{}
 	var day = 0
+
+	content, err := os.Open("AOC6input.csv")
+	if err != nil {
+		log.Fatal(err)
+	}
+	csvReader := csv.NewReader(content)
+	data, err := csvReader.ReadAll()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, number := range data {
+		// fishes = append(fishes, &lanternfish{number, false, false, false})'
+		print(number)
+		for _, digit := range number {
+			digitInt, err := strconv.Atoi(digit)
+			if err != nil {
+				log.Fatal(err)
+			}
+			fishes = append(fishes, &lanternfish{digitInt, false, false, false})
+		}
+	}
+
 	// First we tick, then we check for -1 fish, if that's the case we call the birth fish method
 
 	// and then we can do this up until we get the day we want
@@ -67,8 +99,7 @@ func main() {
 		}
 
 		for _, fish := range fishes {
-			print(fish.timer)
-			print("\n")
+			print(fish.timer, ",")
 
 		}
 
@@ -89,7 +120,7 @@ func main() {
 		}
 
 		day++
-		fmt.Println("The day is", day)
+		fmt.Println("The day is \n", day)
 		// Perhaps put whatever day it is here
 	}
 	print("test")
