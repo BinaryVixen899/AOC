@@ -1,10 +1,13 @@
 package main
 
+import "fmt"
+
 type lanternfish struct {
 	timer int
 	// Remember that the timer resets to 6
-	firstfish bool
-	nlf       bool
+	firstfish    bool
+	nlf          bool
+	birthnextday bool
 	// New lantern fish
 }
 
@@ -28,17 +31,15 @@ func NewLanternFish() *lanternfish {
 
 func (lf *lanternfish) tick() {
 
-	for lf.timer >= 0 && lf.nlf != true {
+	for lf.timer > 0 && lf.nlf != true {
 		lf.timer -= 1
-		print(lf.timer)
-		print("\n")
 		return
 
 	}
 
-	if lf.timer == -1 {
-		print("test")
-		lf.timer = 6
+	if lf.timer == 0 && lf.birthnextday == false {
+		// do a thing here to have fish birth the following day and restart 0
+		lf.birthnextday = true
 		return
 	}
 
@@ -50,28 +51,45 @@ func (lf *lanternfish) tick() {
 }
 
 func main() {
-	afish := &lanternfish{3, true, false}
-	secondfish := &lanternfish{4, false, false}
-	thirdfish := &lanternfish{3, false, false}
-	fourthfish := &lanternfish{1, false, false}
-	fifthfish := &lanternfish{2, false, false}
+	afish := &lanternfish{3, true, false, false}
+	secondfish := &lanternfish{4, false, false, false}
+	thirdfish := &lanternfish{3, false, false, false}
+	fourthfish := &lanternfish{1, false, false, false}
+	fifthfish := &lanternfish{2, false, false, false}
 	var fishes = []*lanternfish{afish, secondfish, thirdfish, fourthfish, fifthfish}
 	var day = 0
 	// First we tick, then we check for -1 fish, if that's the case we call the birth fish method
 
 	// and then we can do this up until we get the day we want
-	for day < 18 {
+	for day <= 18 {
+		if day == 0 {
+			fmt.Println("The day is", day)
+		}
+
+		for _, fish := range fishes {
+			print(fish.timer)
+			print("\n")
+
+		}
 
 		for _, fish := range fishes {
 			fish.tick()
-			if fish.timer == -1 {
+
+		}
+
+		for _, fish := range fishes {
+
+			if fish.timer == 0 && fish.birthnextday == true {
 				fishes = append(fishes, NewLanternFish())
+				fish.timer = 6
+				fish.birthnextday = false
 				// this relies on the assumption that it will NOT count this new one. This may be a bad assumption
 			}
 
 		}
-		print("A New Day Is Dawning \n")
+
 		day++
+		fmt.Println("The day is", day)
 		// Perhaps put whatever day it is here
 	}
 	print("test")
@@ -81,3 +99,6 @@ func main() {
 	// maybe do this until a certain number of days?
 	// We would still need to find a way to have EVERYTHING execute ticks
 }
+
+// We need day 1 to be  2,3,2,0,1
+// Currently day 1 is  2 3 2 6 1 8
