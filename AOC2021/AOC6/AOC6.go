@@ -3,9 +3,8 @@ package main
 type lanternfish struct {
 	timer int
 	// Remember that the timer resets to 6
-	startcountdown bool
-	firstfish      bool
-	nlf            bool
+	firstfish bool
+	nlf       bool
 	// New lantern fish
 }
 
@@ -29,10 +28,7 @@ func NewLanternFish() *lanternfish {
 
 func (lf *lanternfish) tick() {
 
-	for lf.timer >= 0 && lf.startcountdown == true && lf.nlf != true {
-		if lf.firstfish == true {
-			print("A day has passed \n")
-		}
+	for lf.timer >= 0 && lf.nlf != true {
 		lf.timer -= 1
 		print(lf.timer)
 		print("\n")
@@ -41,11 +37,9 @@ func (lf *lanternfish) tick() {
 	}
 
 	if lf.timer == -1 {
+		print("test")
 		lf.timer = 6
-		NewLanternFish().tick()
-		if lf.firstfish == true {
-			print("A day has passed ")
-		}
+		return
 	}
 
 	if lf.nlf == true {
@@ -53,27 +47,37 @@ func (lf *lanternfish) tick() {
 		return
 	}
 
-	if lf.startcountdown == false {
-		lf.startcountdown = true
-		lf.tick()
-		// Recursive logic that should take into account the fake tick
-	}
-
 }
 
 func main() {
-	afish := lanternfish{3, true, true, false}
-	secondfish := lanternfish{4, true, false, false}
-	thirdfish := lanternfish{3, true, false, false}
-	fourthfish := lanternfish{1, true, false, false}
-	fifthfish := lanternfish{2, true, false, false}
+	afish := &lanternfish{3, true, false}
+	secondfish := &lanternfish{4, false, false}
+	thirdfish := &lanternfish{3, false, false}
+	fourthfish := &lanternfish{1, false, false}
+	fifthfish := &lanternfish{2, false, false}
+	var fishes = []*lanternfish{afish, secondfish, thirdfish, fourthfish, fifthfish}
+	var day = 0
+	// First we tick, then we check for -1 fish, if that's the case we call the birth fish method
+
+	// and then we can do this up until we get the day we want
+	for day < 18 {
+
+		for _, fish := range fishes {
+			fish.tick()
+			if fish.timer == -1 {
+				fishes = append(fishes, NewLanternFish())
+				// this relies on the assumption that it will NOT count this new one. This may be a bad assumption
+			}
+
+		}
+		print("A New Day Is Dawning \n")
+		day++
+		// Perhaps put whatever day it is here
+	}
+	print("test")
+
+	// We can increase the date here
 
 	// maybe do this until a certain number of days?
 	// We would still need to find a way to have EVERYTHING execute ticks
-	afish.tick()
-	secondfish.tick()
-	thirdfish.tick()
-	fourthfish.tick()
-	fifthfish.tick()
-
 }
