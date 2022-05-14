@@ -28,7 +28,7 @@ type lanternfish struct {
 // In reality you can just not export the type but export an itnerface
 // WWID:
 
-// Building a lanternfish input parser
+// Building a lanternfish count function
 
 func NewLanternFish() *lanternfish {
 	lf := lanternfish{}
@@ -67,6 +67,7 @@ func main() {
 	// var fishes = []*lanternfish{afish, secondfish, thirdfish, fourthfish, fifthfish}
 	var fishes = []*lanternfish{}
 	var day = 0
+	var countoffish = 0
 
 	content, err := os.Open("AOC6input.csv")
 	if err != nil {
@@ -93,13 +94,18 @@ func main() {
 	// First we tick, then we check for -1 fish, if that's the case we call the birth fish method
 
 	// and then we can do this up until we get the day we want
-	for day <= 18 {
+	for day <= 256 {
 		if day == 0 {
 			fmt.Println("The day is", day)
 		}
 
-		for _, fish := range fishes {
-			print(fish.timer, ",")
+		if day == 256 {
+			for fishcount, _ := range fishes {
+				fishcount += 1
+				countoffish = fishcount
+
+			}
+			print(countoffish)
 
 		}
 
