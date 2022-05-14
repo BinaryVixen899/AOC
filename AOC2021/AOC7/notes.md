@@ -1,3 +1,11 @@
+# WWID 
+Crafting a unique method so that I can do what I want to do with this 
+
+# TODO 
+* This is a good time to brush up on the instantiation of arrays and slices in golang. I know the differences in the textbook sense, but it's the form of them in the code that gets me.  
+
+---
+
 --- Day 7: The Treachery of Whales ---
 A giant whale has decided your submarine is its next meal, and it's much faster than you are. There's nowhere to run!
 
