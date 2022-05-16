@@ -6,10 +6,11 @@ import (
 )
 
 func main() {
+	var mode int
 
 	// I don't know how large my input will be, hence a slice
 	inputslice := []int{16, 1, 2, 0, 4, 2, 7, 1, 2, 14}
-	getmode(inputslice)
+	mode = getmode(inputslice)
 }
 
 func getmode(myslice []int) {
