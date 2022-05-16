@@ -1,5 +1,5 @@
 # WWID 
-Crafting a unique method so that I can do what I want to do with this 
+Creating a method that will show us the mode
 
 # TODO 
 * This is a good time to brush up on the instantiation of arrays and slices in golang. I know the differences in the textbook sense, but it's the form of them in the code that gets me.  
