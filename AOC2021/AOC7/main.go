@@ -68,6 +68,28 @@ func getmode(myslice []int) int {
 
 }
 
+func getmedian(myslice []int) int {
+
+	var median int
+	var remainder int
+
+	if sort.IntsAreSorted(myslice) == false {
+		sort.Ints(myslice)
+	}
+	median = len(myslice) / 2
+	if len(myslice)%2 == 0 {
+		median = myslice[median+1]
+	} else {
+		remainder = len(myslice) % 2
+		median = round(remainder, 2, median)
+	}
+
+	return median
+
+	// I think we can do this just by calculating the
+
+}
+
 func unique(myslice []int) []int {
 	// We have to pass a SORTED slice here or this will never work
 	var uniqueslice []int
@@ -103,5 +125,15 @@ func fuelcalculation(inputslice []int, mode int) {
 	}
 
 	print(fueltotal)
+
+}
+
+func round(remainder int, divisor int, median int) int {
+	// Is the remainder at least half of the divisor? If so, round up, otherwise round down.
+	if remainder*2 > divisor {
+		median = median + 1
+
+	}
+	return median
 
 }
