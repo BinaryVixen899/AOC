@@ -26,8 +26,8 @@ func main() {
 
 }
 
-func parsetextfile() []string {
-	var lines []string
+func parsetextfile() [][]string {
+	var lines [][]string
 	f, err := os.Open("puzzleinput.txt")
 
 	if err != nil {
@@ -40,7 +40,7 @@ func parsetextfile() []string {
 		currentline := scanner.Text()
 		splitline := strings.Split(currentline, "|")
 		// okay so splitline 0 contains the problem and splitline 1 contains the output
-		lines = append(lines, splitline...)
+		lines = append(lines, splitline)
 	}
 
 	return lines
