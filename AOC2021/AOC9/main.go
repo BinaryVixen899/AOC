@@ -1,6 +1,6 @@
 package main
 
-// WWID: Realizing this isn't truly DFS, yet. 
+// WWID: Realizing this isn't truly DFS, yet. Also, the corner checking functions  
 
 // RULES
 //First, we need to look around at all numbers around us and select the lowest one
@@ -97,6 +97,24 @@ func lookdown(index int, slice[]int) {
 		visited.push(slice[index+10])
 		return slice[index + 10]
 	}
+	
+}
+
+// CornerChecking 
+func leftcornercheck (index int, slice[]int ) {
+	if slice[index].contains(0) == true {
+		return true 
+	}
+}
+
+func rightcornercheck(number int) {
+	if math.Mod(number, 9) ==  0 {
+		return true 
+	 }
+}
+
+func middlecheck(number int) {
+	 
 	
 }
 
