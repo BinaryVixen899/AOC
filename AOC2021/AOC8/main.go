@@ -50,7 +50,6 @@ func main() {
 
 	// Input parsing
 	lines := parsetextfile()
-	print(lines)
 
 	// We will need these later when it comes to output
 	one := newSpecialDigit("one", 2, 0, 0)
@@ -74,7 +73,6 @@ func main() {
 				// Okay so what I THINK I've done here is that by saying *digit above I have given it a map of pointers which I will eventually need to dereference because ughhhhhhh
 				// And I should ask later
 				// Construct a temporary slice or dictionary
-				print(word)
 			}
 
 			// The issue here is that word is a rune
@@ -108,7 +106,6 @@ func main() {
 		// uniquecount = getcountofuniquedigits(v)
 		// digittype = v.identifydigits()
 		// newDigit(v.string, uniquecount, digittype)
-		print(v)
 		// And then here we
 
 	}
