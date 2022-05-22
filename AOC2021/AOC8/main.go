@@ -84,6 +84,20 @@ func main() {
 		// Okay so now we're all done and we get to do the scanning
 
 		for _, word := range outputstring {
+			// we can just do a case/switch statement here
+			output := temporarymap[word]
+			switch output {
+
+			case 1:
+				one.digitcount++
+			case 4:
+				four.digitcount++
+			case 7:
+				seven.digitcount++
+			case 8:
+				eight.digitcount++
+
+			}
 
 		}
 		// Here is where we do the output string scanning
@@ -100,7 +114,10 @@ func main() {
 	}
 
 	// And then do here is where we print the counts when we're all done
-	one.
+	print(one.digitcount)
+	print(four.digitcount)
+	print(seven.digitcount)
+	print(eight.digitcount)
 
 	// for _, v := range lines {
 	// 	// I feel like we shold use letter scanning here, some sort of regex instead of just arrays, because otherwise this thing is going ot be very inefficient
