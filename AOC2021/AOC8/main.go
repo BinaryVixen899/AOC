@@ -1,6 +1,6 @@
 package main
 
-// WWID: Working on the output now that input is done
+// WWID: REALIZING THE UNIQUE FUNCTION ISNT EVEN NECESSARY BECAUSE THAT WAS DONE IN THE FIRST PLACE UGHHHH
 
 import (
 	"bufio"
@@ -65,6 +65,7 @@ func main() {
 		outputstring := strings.Split(v[1], " ")
 		temporarymap := make(map[string]int)
 		for _, word := range inputstring {
+			uniquecount = 0
 			uniquecount = getUniqueDigitsCount(word)
 			digittype = identifyDigits(uniquecount)
 			if digittype != -1 {
@@ -159,7 +160,11 @@ func getUniqueDigitsCount(letterchunk string) int {
 			if v != letterchunkslice[i+1] {
 				uniqueslice = append(uniqueslice, v)
 			}
+		} else {
+			if v != letterchunkslice[i-1] {
+				uniqueslice = append(uniqueslice, v)
 
+			}
 		}
 		// So at the end of this we should have a unique
 
