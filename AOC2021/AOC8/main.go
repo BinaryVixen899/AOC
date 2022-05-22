@@ -1,6 +1,6 @@
 package main
 
-// WWID: Fixing all the code so that we can run through inputs before moving onwards to an efficient way to do outputs
+// WWID: Working on the output now that input is done
 
 import (
 	"bufio"
@@ -53,10 +53,10 @@ func main() {
 	print(lines)
 
 	// We will need these later when it comes to output
-	// one := newSpecialDigit("one", 2, 0, 0)
-	// four := newSpecialDigit("four", 4, 0, 0)
-	// seven := newSpecialDigit("seven", 3, 0, 0)
-	// eight := newSpecialDigit("eight", 8, 0, 0)
+	one := newSpecialDigit("one", 2, 0, 0)
+	four := newSpecialDigit("four", 4, 0, 0)
+	seven := newSpecialDigit("seven", 3, 0, 0)
+	eight := newSpecialDigit("eight", 8, 0, 0)
 
 	// Okay so we're going to have to split on the spaces and such. Ugh.
 
@@ -64,17 +64,26 @@ func main() {
 		// What if we split v[0]
 		inputstring := strings.Split(v[0], " ")
 		outputstring := strings.Split(v[1], " ")
+		temporarymap := make(map[string]int)
 		for _, word := range inputstring {
 			uniquecount = getUniqueDigitsCount(word)
 			digittype = identifyDigits(uniquecount)
 			if digittype != -1 {
-				newDigit(word, uniquecount, digittype)
+				somedigit := newDigit(word, uniquecount, digittype)
+				temporarymap[somedigit.letters] = somedigit.digittype
+				// Okay so what I THINK I've done here is that by saying *digit above I have given it a map of pointers which I will eventually need to dereference because ughhhhhhh
+				// And I should ask later
 				// Construct a temporary slice or dictionary
 				print(word)
 			}
 
 			// The issue here is that word is a rune
 			// So we have to split v[0] in order to do this
+
+		}
+		// Okay so now we're all done and we get to do the scanning
+
+		for _, word := range outputstring {
 
 		}
 		// Here is where we do the output string scanning
@@ -91,6 +100,7 @@ func main() {
 	}
 
 	// And then do here is where we print the counts when we're all done
+	one.
 
 	// for _, v := range lines {
 	// 	// I feel like we shold use letter scanning here, some sort of regex instead of just arrays, because otherwise this thing is going ot be very inefficient
