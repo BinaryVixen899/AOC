@@ -56,7 +56,7 @@ func main() {
 	one := newSpecialDigit("one", 2, 0, 0)
 	four := newSpecialDigit("four", 4, 0, 0)
 	seven := newSpecialDigit("seven", 3, 0, 0)
-	eight := newSpecialDigit("eight", 8, 0, 0)
+	eight := newSpecialDigit("eight", 7, 0, 0)
 
 	// Okay so we're going to have to split on the spaces and such. Ugh.
 
@@ -122,9 +122,16 @@ func main() {
 	}
 
 	// And then do here is where we print the counts when we're all done
+	print("onecount:")
 	print(one.digitcount)
+	print("\n")
+	print("fourcount")
 	print(four.digitcount)
+	print("\n")
+	print("sevencount")
 	print(seven.digitcount)
+	print("\n")
+	print("eightcount")
 	print(eight.digitcount)
 
 	// for _, v := range lines {
@@ -147,7 +154,7 @@ func identifyDigits(uniquecount int) int {
 	case 3:
 		return 7
 
-	case 8:
+	case 7:
 		return 8
 
 	default:
