@@ -198,7 +198,7 @@ func getUniqueDigitsCount(letterchunk string) int {
 
 func parsetextfile() [][]string {
 	var lines [][]string
-	f, err := os.Open("testpuzzleinput.txt")
+	f, err := os.Open("puzzleinput.txt")
 
 	if err != nil {
 		log.Fatal(err)
