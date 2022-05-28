@@ -1,6 +1,6 @@
 package main
 
-// WWID: REALIZING THE UNIQUE FUNCTION ISNT EVEN NECESSARY BECAUSE THAT WAS DONE IN THE FIRST PLACE UGHHHH
+// WWID: And that the output is likewise sorted before going in
 
 import (
 	"bufio"
@@ -12,6 +12,7 @@ import (
 
 type digit struct {
 	letters            string
+	sortedletters      []string
 	uniqueletterscount int
 	digittype          int
 	digitcount         int
@@ -70,6 +71,9 @@ func main() {
 			digittype = identifyDigits(uniquecount)
 			if digittype != -1 {
 				somedigit := newDigit(word, uniquecount, digittype)
+				somedigit.sortedletters = strings.Split(somedigit.letters, "")
+				sort.Strings(somedigit.sortedletters)
+				somedigit.letters = strings.Join(somedigit.sortedletters, "")
 				temporarymap[somedigit.letters] = somedigit.digittype
 				// Okay so what I THINK I've done here is that by saying *digit above I have given it a map of pointers which I will eventually need to dereference because ughhhhhhh
 				// And I should ask later
@@ -83,7 +87,13 @@ func main() {
 		// Okay so now we're all done and we get to do the scanning
 
 		for _, word := range outputstring {
+			var wordslice []string
 			// we can just do a case/switch statement here
+			// The problem here is that we are mapping letters two things that are not organized
+			// Also, we aren't identifying all numbers
+			wordslice = strings.Split(word, "")
+			sort.Strings(wordslice)
+			word = strings.Join(wordslice, "")
 			output := temporarymap[word]
 			switch output {
 
