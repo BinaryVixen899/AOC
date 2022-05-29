@@ -2,6 +2,12 @@ package main
 
 // WWID: And that the output is likewise sorted before going in
 
+// For problem 2, we can almost build an 8 out of 1 4 and 7, once we do that we should be able to figure most things out
+// for example, 8, but we can actually figure out a lot more things than just 8, for example, if something has six letters and the same letters as 1, it is a 9
+// if it doesn't, it's a  6
+// I'm tempted just to number these segments. But...
+// I want to do the next problem, I've basically already solved this one
+
 import (
 	"bufio"
 	"log"
