@@ -1,6 +1,6 @@
 package main
 
-// WWID: Making it actually run before I do anything else
+// WWID: I didn't calculate visitednumbers well and that is what is messing this up
 
 // RULES
 //First, we need to look around at all numbers around us and select the lowest one
@@ -39,9 +39,10 @@ func main() {
 					print(solutionnumber)
 					if solution != false {
 						answers = append(answers, currentnumber)
-						push(currentnumber, visited)
+						visited = push(i, visited)
 						continue
 					} else {
+						// this should be where we mark the current number as visited
 						continue
 
 					}
@@ -52,9 +53,10 @@ func main() {
 					print(solutionnumber)
 					if solution != false {
 						answers = append(answers, currentnumber)
-						push(currentnumber, visited)
+						visited = push(i, visited)
 						continue
 					} else {
+						push(i, visited)
 						continue
 
 					}
@@ -64,9 +66,10 @@ func main() {
 					print(solutionnumber)
 					if solution != false {
 						answers = append(answers, currentnumber)
-						push(currentnumber, visited)
+						visited = push(i, visited)
 						continue
 					} else {
+						push(i, visited)
 						continue
 
 					}
@@ -75,23 +78,26 @@ func main() {
 			}
 		}
 	}
-	print(answers)
+	print(len(answers))
+	for _, v := range answers {
+		print(v)
+
+	}
 }
 
 // Navigation Steps
 func lookright(index int, slice []int) int {
 
-	if contains(index+1, slice) == false {
-		push(index+1, visited)
+	if contains(index+1, visited) == false {
 		return slice[index+1]
+		// THIS IS WHERE IT ERRORS OUT
 	} else {
 		return -1
 	}
 }
 
 func lookleft(index int, slice []int) int {
-	if contains(index-1, slice) == false {
-		push(index-1, visited)
+	if contains(index-1, visited) == false {
 		return slice[index-1]
 	} else {
 		return -1
@@ -104,8 +110,7 @@ func lookup(index int, slice []int) int {
 		return -1
 	}
 
-	if contains(index-10, slice) == false {
-		push(index-10, visited)
+	if contains(index-10, visited) == false {
 		return slice[index-10]
 	} else {
 		return -1
@@ -118,8 +123,7 @@ func lookdown(index int, slice []int) int {
 		return -1
 	}
 
-	if contains(index+10, slice) == false {
-		push(index+10, visited)
+	if contains(index+10, visited) == false {
 		return slice[index+10]
 	} else {
 		return -1
@@ -190,8 +194,9 @@ func contains(number int, slice []int) bool {
 }
 
 // Stack Methods
-func push(number int, stack []int) {
+func push(number int, stack []int) []int {
 	stack = append(stack, number)
+	return stack
 }
 
 func pop(number int, stack []int) int {
