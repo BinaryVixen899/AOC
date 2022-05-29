@@ -1,7 +1,5 @@
 package main
 
-import "math"
-
 // WWID: Making it actually run before I do anything else
 
 // RULES
@@ -14,6 +12,7 @@ import "math"
 // I'm not sure if this is a true depth first search. I'm not really popping things off :/
 //ugh okay after looking at the definition this is probably not a true depth first search. Definitely room for improvement. But it will work.
 // We have to do something with leastnumber after we find it
+// The contains function has to be modified so
 var visited []int
 var answers []int
 
@@ -41,6 +40,8 @@ func main() {
 						answers = append(answers, currentnumber)
 						push(currentnumber, visited)
 						continue
+					} else {
+
 					}
 
 				}
@@ -50,6 +51,8 @@ func main() {
 						answers = append(answers, currentnumber)
 						push(currentnumber, visited)
 						continue
+					} else {
+
 					}
 				}
 				if middlecheck(i) == true {
@@ -58,6 +61,8 @@ func main() {
 						answers = append(answers, currentnumber)
 						push(currentnumber, visited)
 						continue
+					} else {
+
 					}
 				}
 
@@ -117,23 +122,23 @@ func lookdown(index int, slice []int) int {
 
 // CornerChecking
 func leftcornercheck(index int) bool {
-	if math.Mod(index, 10) == 0 {
+	if index%10 == 0 {
 		return true
 	} else {
 		return false
 	}
 }
 
-func rightcornercheck(number int) bool {
-	if math.Mod(index, 9) == 0 {
+func rightcornercheck(index int) bool {
+	if index%9 == 0 {
 		return true
 	} else {
 		return false
 	}
 }
 
-func middlecheck(number int) bool {
-	if leftcornercheck && rightcornercheck == false {
+func middlecheck(index int) bool {
+	if (leftcornercheck(index) && rightcornercheck(index)) == false {
 		return true
 	} else {
 		return false
@@ -165,15 +170,14 @@ func findleast(currentnumber int, numbers ...int) (leastnumber int, solution int
 	}
 }
 
-func contains(index int, slice []int) bool {
-	for i, v := range slice {
-		if number == i {
+func contains(number int, slice []int) bool {
+	for _, v := range slice {
+		if number == v {
 			return true
-		} else {
-			return false
 		}
 
 	}
+	return false
 
 }
 
