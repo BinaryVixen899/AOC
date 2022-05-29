@@ -42,29 +42,32 @@ func main() {
 						push(currentnumber, visited)
 						continue
 					} else {
+						continue
 
 					}
 
 				}
 				if rightcornercheck(i) == true {
-					solutionnumber, solution := findleast(lookright(i, combinednumbers), lookdown(i, combinednumbers), lookup(i, combinednumbers))
+					solutionnumber, solution := findleast(lookleft(i, combinednumbers), lookdown(i, combinednumbers), lookup(i, combinednumbers))
 					print(solutionnumber)
 					if solution != false {
 						answers = append(answers, currentnumber)
 						push(currentnumber, visited)
 						continue
 					} else {
+						continue
 
 					}
 				}
 				if middlecheck(i) == true {
-					solutionnumber, solution := findleast(lookright(i, combinednumbers), lookdown(i, combinednumbers), lookup(i, combinednumbers))
+					solutionnumber, solution := findleast(lookleft(i, combinednumbers), lookright(i, combinednumbers), lookdown(i, combinednumbers), lookup(i, combinednumbers))
 					print(solutionnumber)
 					if solution != false {
 						answers = append(answers, currentnumber)
 						push(currentnumber, visited)
 						continue
 					} else {
+						continue
 
 					}
 				}
@@ -72,6 +75,7 @@ func main() {
 			}
 		}
 	}
+	print(answers)
 }
 
 // Navigation Steps
@@ -133,7 +137,7 @@ func leftcornercheck(index int) bool {
 }
 
 func rightcornercheck(index int) bool {
-	if index%9 == 0 {
+	if index%10 == 9 {
 		return true
 	} else {
 		return false
