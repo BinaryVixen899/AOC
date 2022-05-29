@@ -35,8 +35,9 @@ func main() {
 				continue
 			} else {
 				if leftcornercheck(i) == true {
-					leastnumber, solution := findleast(lookright(i, combinednumbers), lookdown(i, combinednumbers), lookup(i, combinednumbers))
-					if solution != -1 {
+					solutionnumber, solution := findleast(lookright(i, combinednumbers), lookdown(i, combinednumbers), lookup(i, combinednumbers))
+					print(solutionnumber)
+					if solution != false {
 						answers = append(answers, currentnumber)
 						push(currentnumber, visited)
 						continue
@@ -46,8 +47,9 @@ func main() {
 
 				}
 				if rightcornercheck(i) == true {
-					leastnumber, solution := findleast(lookright(i, combinednumbers), lookdown(i, combinednumbers), lookup(i, combinednumbers))
-					if solution != -1 {
+					solutionnumber, solution := findleast(lookright(i, combinednumbers), lookdown(i, combinednumbers), lookup(i, combinednumbers))
+					print(solutionnumber)
+					if solution != false {
 						answers = append(answers, currentnumber)
 						push(currentnumber, visited)
 						continue
@@ -56,8 +58,9 @@ func main() {
 					}
 				}
 				if middlecheck(i) == true {
-					leastnumber, solution := findleast(lookright(i, combinednumbers), lookdown(i, combinednumbers), lookup(i, combinednumbers))
-					if solution != -1 {
+					solutionnumber, solution := findleast(lookright(i, combinednumbers), lookdown(i, combinednumbers), lookup(i, combinednumbers))
+					print(solutionnumber)
+					if solution != false {
 						answers = append(answers, currentnumber)
 						push(currentnumber, visited)
 						continue
@@ -147,10 +150,11 @@ func middlecheck(index int) bool {
 }
 
 // Misc Functions
-func findleast(currentnumber int, numbers ...int) (leastnumber int, solution int) {
+func findleast(currentnumber int, numbers ...int) (solution int, isasolution bool) {
 	// This will find the least but can only be fed non visited numbers
 	// Also, this doesn't do anything with numbers that are the same... Maybe add them to a 'to visit' slice?
 	//TODO: We need to remove the -1s as those are numbers that didn't count
+	leastnumber := 0
 
 	for _, number := range numbers {
 		if leastnumber != 0 {
@@ -163,10 +167,10 @@ func findleast(currentnumber int, numbers ...int) (leastnumber int, solution int
 		}
 	}
 
-	if leastnumber != 0 {
-		return leastnumber, -1
+	if leastnumber != currentnumber {
+		return solution, false
 	} else {
-		return -1, currentnumber
+		return solution, true
 	}
 }
 
