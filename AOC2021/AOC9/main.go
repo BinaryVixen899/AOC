@@ -26,7 +26,7 @@ func (b *basin) FindSuspectedLowPoints() {
 			continue
 		}
 		lastnumber = b.heightmap.numbers[i-1]
-		if v < lastnumber && v < b.heightmap.numbers[i+1] && i != len(b.heightmap.numbers) {
+		if i != len(b.heightmap.numbers)-1 && v < lastnumber && v < b.heightmap.numbers[i+1] {
 			// Checking to make sure we are not at the end
 			b.suspectedlowpoints[i] = b.heightmap.numbers[i]
 			// This still doesn't account for everything, what about #5?
@@ -92,7 +92,7 @@ func main() {
 	db.heightmap = d
 	eb.heightmap = e
 	// TD: Group these all into some sort of collection so we can just iterate through and call things
-	// ab.FindSuspectedLowPoints()
+	ab.FindSuspectedLowPoints()
 	// bb.FindSuspectedLowPoints()
 	// cb.FindSuspectedLowPoints()
 	// db.FindSuspectedLowPoints()
@@ -101,7 +101,7 @@ func main() {
 	// bb.FindActualLowpoints(&cb)
 	// cb.FindActualLowpoints(&db)
 	// db.FindActualLowpoints(&eb)
-	// ab.printSuspectedLowPoints()
+	ab.printSuspectedLowPoints()
 	// bb.printSuspectedLowPoints()
 	// cb.printSuspectedLowPoints()
 	// db.printSuspectedLowPoints()
