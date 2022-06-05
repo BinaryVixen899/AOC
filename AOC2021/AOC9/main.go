@@ -50,8 +50,7 @@ func (b *basin) FindActualLowpoints(nextbasin *basin) {
 			continue
 			// keep in suspected lowpoints, do nothing
 		} else {
-			nextbasin.suspectedlowpoints[k] = v
-			delete(nextbasin.suspectedlowpoints, k)
+			delete(b.suspectedlowpoints, k)
 			//TODO: this also means that in the original findsuspectedlowpoints we will have to find a way to deal with lowpoints possibly already existing
 
 		}
@@ -68,6 +67,7 @@ func (b *basin) printLowPoints() {
 }
 
 func (b *basin) printSuspectedLowPoints() {
+
 	for _, v := range b.suspectedlowpoints {
 		print(v)
 
@@ -100,22 +100,26 @@ func main() {
 	db.FindSuspectedLowPoints()
 	eb.FindSuspectedLowPoints()
 	// Print Suspected Lowpoints for Debugging Purposes
-	// ab.printSuspectedLowPoints()
-	// bb.printSuspectedLowPoints()
-	// cb.printSuspectedLowPoints()
-	// db.printSuspectedLowPoints()
-	// eb.printSuspectedLowPoints()
+	print("Suspected Lowpoints" + "\n")
+	ab.printSuspectedLowPoints()
+	bb.printSuspectedLowPoints()
+	cb.printSuspectedLowPoints()
+	db.printSuspectedLowPoints()
+	eb.printSuspectedLowPoints()
+
 	// Find Actual LowPoints
 	ab.FindActualLowpoints(&bb)
 	bb.FindActualLowpoints(&cb)
 	cb.FindActualLowpoints(&db)
 	db.FindActualLowpoints(&eb)
+
 	// printLowPoints
-	ab.printLowPoints()
-	bb.printLowPoints()
-	cb.printLowPoints()
-	db.printLowPoints()
-	eb.printLowPoints()
+	print("Actual Lowpoints" + "\n")
+	ab.printSuspectedLowPoints()
+	bb.printSuspectedLowPoints()
+	cb.printSuspectedLowPoints()
+	db.printSuspectedLowPoints()
+	eb.printSuspectedLowPoints()
 	// A great example of if this works is the 6 in D, if this is computing things properly it should be deleted as there is a lower number below it
 	// Print those out
 
