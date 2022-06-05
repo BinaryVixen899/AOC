@@ -23,14 +23,16 @@ func (b *basin) FindSuspectedLowPoints() {
 	for i, v := range b.heightmap.numbers {
 		if i == 0 {
 			// if this is 0 we don't want to compare to nil
+			// So instead let's compare to i+1
+			if b.heightmap.numbers[i+1] > v {
+				b.suspectedlowpoints[i] = b.heightmap.numbers[i]
+			}
 			continue
 		}
 		lastnumber = b.heightmap.numbers[i-1]
 		if i != len(b.heightmap.numbers)-1 && v < lastnumber && v < b.heightmap.numbers[i+1] {
 			// Checking to make sure we are not at the end
 			b.suspectedlowpoints[i] = b.heightmap.numbers[i]
-			// This still doesn't account for everything, what about #5?
-			// Add to suspected lowpoints if the current number is greater
 		} else {
 			if i == len(b.heightmap.numbers)-1 && v < lastnumber {
 				b.suspectedlowpoints[i] = b.heightmap.numbers[i]
@@ -93,7 +95,7 @@ func main() {
 	eb.heightmap = e
 	// TD: Group these all into some sort of collection so we can just iterate through and call things
 	ab.FindSuspectedLowPoints()
-	// bb.FindSuspectedLowPoints()
+	bb.FindSuspectedLowPoints()
 	// cb.FindSuspectedLowPoints()
 	// db.FindSuspectedLowPoints()
 	eb.FindSuspectedLowPoints()
@@ -102,7 +104,7 @@ func main() {
 	// cb.FindActualLowpoints(&db)
 	// db.FindActualLowpoints(&eb)
 	ab.printSuspectedLowPoints()
-	// bb.printSuspectedLowPoints()
+	bb.printSuspectedLowPoints()
 	// cb.printSuspectedLowPoints()
 	// db.printSuspectedLowPoints()
 	eb.printSuspectedLowPoints()
