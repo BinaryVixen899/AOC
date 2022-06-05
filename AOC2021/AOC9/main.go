@@ -88,32 +88,32 @@ func main() {
 	c.numbers = []int{9, 8, 5, 6, 7, 8, 9, 8, 9, 2}
 	d.numbers = []int{8, 7, 6, 7, 8, 9, 6, 7, 8, 9}
 	e.numbers = []int{9, 8, 9, 9, 9, 6, 5, 6, 7, 8}
+	// compute a list of heights depths
 	ab.heightmap = a
 	bb.heightmap = b
 	cb.heightmap = c
 	db.heightmap = d
 	eb.heightmap = e
 	// TD: Group these all into some sort of collection so we can just iterate through and call things
+	// Find Suspected Lowpoints
 	ab.FindSuspectedLowPoints()
 	bb.FindSuspectedLowPoints()
 	cb.FindSuspectedLowPoints()
 	db.FindSuspectedLowPoints()
 	eb.FindSuspectedLowPoints()
-	// ab.FindActualLowpoints(&bb)
-	// bb.FindActualLowpoints(&cb)
-	// cb.FindActualLowpoints(&db)
-	// db.FindActualLowpoints(&eb)
+	// Print Suspected Lowpoints for Debugging Purposes
 	ab.printSuspectedLowPoints()
 	bb.printSuspectedLowPoints()
 	cb.printSuspectedLowPoints()
 	db.printSuspectedLowPoints()
 	eb.printSuspectedLowPoints()
-	// Ughhhh the issue we're hitting here is a flaw in how we planned this out
-	// IE: five is added because six is greater than five
+	// Find Actual LowPoints
+	// ab.FindActualLowpoints(&bb)
+	// bb.FindActualLowpoints(&cb)
+	// cb.FindActualLowpoints(&db)
+	// db.FindActualLowpoints(&eb)
+	// Print those out
 
-	// compute a list of heights depths
-	// Find suspected low points
-	// find the actual low points
 	// do the risk calculation
 
 }
