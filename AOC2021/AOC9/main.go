@@ -44,7 +44,6 @@ func (b *basin) FindSuspectedLowPoints() {
 
 }
 func (b *basin) FindActualLowpoints(nextbasin *basin) {
-	nextbasin.suspectedlowpoints = make(map[int]int)
 	for k, v := range b.suspectedlowpoints {
 		if nextbasin.heightmap.numbers[k] >= v {
 			continue
