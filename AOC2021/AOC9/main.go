@@ -4,6 +4,7 @@ type basin struct {
 	heightmap          queue
 	lowpoints          map[int]int
 	suspectedlowpoints map[int]int
+	islastbasin        bool
 }
 
 type queue struct {
@@ -44,8 +45,24 @@ func (b *basin) FindSuspectedLowPoints() {
 
 }
 func (b *basin) FindActualLowpoints(nextbasin *basin, previousbasin *basin) {
+
 	for k, v := range b.suspectedlowpoints {
 		if nextbasin.heightmap.numbers[k] <= v || previousbasin.heightmap.numbers[k] <= v {
+			delete(b.suspectedlowpoints, k)
+			// keep in suspected lowpoints, do nothing
+		} else {
+			continue
+			//TODO: this also means that in the original findsuspectedlowpoints we will have to find a way to deal with lowpoints possibly already existing
+
+		}
+
+	}
+}
+
+func (b *basin) FindActualLowpointsForLastBasin(previousbasin *basin) {
+
+	for k, v := range b.suspectedlowpoints {
+		if previousbasin.heightmap.numbers[k] <= v {
 			delete(b.suspectedlowpoints, k)
 			// keep in suspected lowpoints, do nothing
 		} else {
@@ -91,6 +108,7 @@ func main() {
 	cb.heightmap = c
 	db.heightmap = d
 	eb.heightmap = e
+	eb.islastbasin = true
 	// TD: Group these all into some sort of collection so we can just iterate through and call things
 	// Find Suspected Lowpoints
 	ab.FindSuspectedLowPoints()
@@ -110,6 +128,7 @@ func main() {
 	bb.FindActualLowpoints(&cb, &ab)
 	cb.FindActualLowpoints(&db, &bb)
 	db.FindActualLowpoints(&eb, &cb)
+	eb.FindActualLowpointsForLastBasin(&db)
 
 	// printLowPoints
 	print("Actual Lowpoints" + "\n")
@@ -118,6 +137,8 @@ func main() {
 	cb.printSuspectedLowPoints()
 	db.printSuspectedLowPoints()
 	eb.printSuspectedLowPoints()
+	// TD: We need to make a specific thing for the VERY LAST set, otherwise we would get say.... 8 still being a thing
+
 	// A great example of if this works is the 6 in D, if this is computing things properly it should be deleted as there is a lower number below it
 	// Print those out
 
