@@ -96,8 +96,8 @@ func main() {
 	// TD: Group these all into some sort of collection so we can just iterate through and call things
 	ab.FindSuspectedLowPoints()
 	bb.FindSuspectedLowPoints()
-	// cb.FindSuspectedLowPoints()
-	// db.FindSuspectedLowPoints()
+	cb.FindSuspectedLowPoints()
+	db.FindSuspectedLowPoints()
 	eb.FindSuspectedLowPoints()
 	// ab.FindActualLowpoints(&bb)
 	// bb.FindActualLowpoints(&cb)
@@ -105,8 +105,8 @@ func main() {
 	// db.FindActualLowpoints(&eb)
 	ab.printSuspectedLowPoints()
 	bb.printSuspectedLowPoints()
-	// cb.printSuspectedLowPoints()
-	// db.printSuspectedLowPoints()
+	cb.printSuspectedLowPoints()
+	db.printSuspectedLowPoints()
 	eb.printSuspectedLowPoints()
 	// Ughhhh the issue we're hitting here is a flaw in how we planned this out
 	// IE: five is added because six is greater than five
