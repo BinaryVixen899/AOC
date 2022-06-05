@@ -43,13 +43,13 @@ func (b *basin) FindSuspectedLowPoints() {
 	}
 
 }
-func (b *basin) FindActualLowpoints(nextbasin *basin) {
+func (b *basin) FindActualLowpoints(nextbasin *basin, previousbasin *basin) {
 	for k, v := range b.suspectedlowpoints {
-		if nextbasin.heightmap.numbers[k] >= v {
-			continue
+		if nextbasin.heightmap.numbers[k] <= v || previousbasin.heightmap.numbers[k] <= v {
+			delete(b.suspectedlowpoints, k)
 			// keep in suspected lowpoints, do nothing
 		} else {
-			delete(b.suspectedlowpoints, k)
+			continue
 			//TODO: this also means that in the original findsuspectedlowpoints we will have to find a way to deal with lowpoints possibly already existing
 
 		}
@@ -107,10 +107,9 @@ func main() {
 	eb.printSuspectedLowPoints()
 
 	// Find Actual LowPoints
-	ab.FindActualLowpoints(&bb)
-	bb.FindActualLowpoints(&cb)
-	cb.FindActualLowpoints(&db)
-	db.FindActualLowpoints(&eb)
+	bb.FindActualLowpoints(&cb, &ab)
+	cb.FindActualLowpoints(&db, &bb)
+	db.FindActualLowpoints(&eb, &cb)
 
 	// printLowPoints
 	print("Actual Lowpoints" + "\n")
