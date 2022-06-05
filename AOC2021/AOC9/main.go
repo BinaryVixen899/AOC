@@ -95,12 +95,17 @@ func (b *basin) printSuspectedLowPoints() {
 }
 
 func (b *basins) RiskCalculation() {
+	var sum int
 	for _, b := range b.basinslice {
 		for _, v := range b.suspectedlowpoints {
 			print(v + 1)
+			sum = sum + (v + 1)
 		}
 
 	}
+	print("\n")
+	print("Sum:" + "\n")
+	print(sum)
 
 }
 
