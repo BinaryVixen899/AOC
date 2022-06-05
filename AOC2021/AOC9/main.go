@@ -26,9 +26,10 @@ func (b *basin) FindSuspectedLowPoints() {
 			continue
 		}
 		lastnumber = b.heightmap.numbers[i-1]
-		if v > lastnumber && i != len(b.heightmap.numbers) {
+		if v < lastnumber && v < b.heightmap.numbers[i+1] && i != len(b.heightmap.numbers) {
 			// Checking to make sure we are not at the end
-			b.suspectedlowpoints[i-1] = b.heightmap.numbers[i-1]
+			b.suspectedlowpoints[i] = b.heightmap.numbers[i]
+			// This still doesn't account for everything, what about #5?
 			// Add to suspected lowpoints if the current number is greater
 		} else {
 			if i == len(b.heightmap.numbers)-1 && v < lastnumber {
@@ -71,6 +72,7 @@ func (b *basin) printSuspectedLowPoints() {
 		print(v)
 
 	}
+	print("\n")
 }
 
 func (b *basin) RiskCalculation() {
@@ -90,21 +92,22 @@ func main() {
 	db.heightmap = d
 	eb.heightmap = e
 	// TD: Group these all into some sort of collection so we can just iterate through and call things
-	ab.FindSuspectedLowPoints()
-
+	// ab.FindSuspectedLowPoints()
 	// bb.FindSuspectedLowPoints()
 	// cb.FindSuspectedLowPoints()
 	// db.FindSuspectedLowPoints()
-	// eb.FindSuspectedLowPoints()
+	eb.FindSuspectedLowPoints()
 	// ab.FindActualLowpoints(&bb)
 	// bb.FindActualLowpoints(&cb)
 	// cb.FindActualLowpoints(&db)
 	// db.FindActualLowpoints(&eb)
-	ab.printSuspectedLowPoints()
-	// bb.printLowPoints()
-	// cb.printLowPoints()
-	// db.printLowPoints()
-	// eb.printLowPoints()
+	// ab.printSuspectedLowPoints()
+	// bb.printSuspectedLowPoints()
+	// cb.printSuspectedLowPoints()
+	// db.printSuspectedLowPoints()
+	eb.printSuspectedLowPoints()
+	// Ughhhh the issue we're hitting here is a flaw in how we planned this out
+	// IE: five is added because six is greater than five
 
 	// compute a list of heights depths
 	// Find suspected low points
