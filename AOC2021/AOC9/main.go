@@ -1,5 +1,8 @@
 package main
 
+type basins struct {
+	basinslice []basin
+}
 type basin struct {
 	heightmap          queue
 	lowpoints          map[int]int
@@ -91,12 +94,21 @@ func (b *basin) printSuspectedLowPoints() {
 	print("\n")
 }
 
-func (b *basin) RiskCalculation() {
+func (b *basins) RiskCalculation() {
+	for _, b := range b.basinslice {
+		for _, v := range b.suspectedlowpoints {
+			print(v + 1)
+		}
+
+	}
+
 }
 
 func main() {
 	var a, b, c, d, e queue
 	var ab, bb, cb, db, eb basin
+	var basins basins
+
 	a.numbers = []int{2, 1, 9, 9, 9, 4, 3, 2, 1, 0}
 	b.numbers = []int{3, 9, 8, 7, 8, 9, 4, 9, 2, 1}
 	c.numbers = []int{9, 8, 5, 6, 7, 8, 9, 8, 9, 2}
@@ -137,11 +149,9 @@ func main() {
 	cb.printSuspectedLowPoints()
 	db.printSuspectedLowPoints()
 	eb.printSuspectedLowPoints()
-	// TD: We need to make a specific thing for the VERY LAST set, otherwise we would get say.... 8 still being a thing
-
-	// A great example of if this works is the 6 in D, if this is computing things properly it should be deleted as there is a lower number below it
-	// Print those out
-
+	basins.basinslice = append(basins.basinslice, ab, bb, cb, db, eb)
+	// TD: Change this so we are no longer using a copy
 	// do the risk calculation
+	basins.RiskCalculation()
 
 }
