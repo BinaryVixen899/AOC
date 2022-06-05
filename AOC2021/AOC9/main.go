@@ -47,8 +47,19 @@ func (b *basin) FindSuspectedLowPoints() {
 
 }
 func (b *basin) FindActualLowpoints(nextbasin *basin) {
+	var nlp = *nextbasin.suspectedlowpoints
+	var nhmp = *nextbasin.heightmap.numbers
 
-	for _, v := range v {
+	for i, v := range *b.suspectedlowpoints {
+		if nhmp[i] >= v {
+			continue
+			// keep in suspected lowpoints, do nothing
+		} else {
+
+			// remove from suspected lowpoints, add to the suspected lowpoints for nextbasin
+			//TODO: this also means that in the original findsuspectedlowpoints we will have to find a way to deal with lowpoints possibly already existing
+
+		}
 
 	}
 }
