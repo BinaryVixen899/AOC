@@ -4,6 +4,7 @@ type basin struct {
 	heightmap          *queue
 	lowpoints          *[]int
 	suspectedlowpoints *map[int]int
+	// don't need to have these be *
 }
 
 type queue struct {
@@ -50,13 +51,13 @@ func (b *basin) FindActualLowpoints(nextbasin *basin) {
 	var nlp = *nextbasin.suspectedlowpoints
 	var nhmp = *nextbasin.heightmap.numbers
 
-	for i, v := range *b.suspectedlowpoints {
-		if nhmp[i] >= v {
+	for k, v := range *b.suspectedlowpoints {
+		if nhmp[k] >= v {
 			continue
 			// keep in suspected lowpoints, do nothing
 		} else {
-
-			// remove from suspected lowpoints, add to the suspected lowpoints for nextbasin
+			nlp[k] = v
+			delete(nlp, k)
 			//TODO: this also means that in the original findsuspectedlowpoints we will have to find a way to deal with lowpoints possibly already existing
 
 		}
