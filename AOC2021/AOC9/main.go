@@ -44,17 +44,14 @@ func (b *basin) FindSuspectedLowPoints() {
 
 }
 func (b *basin) FindActualLowpoints(nextbasin *basin) {
-	// var nlp = nextbasin.suspectedlowpoints
-	var nhmp = nextbasin.heightmap.numbers
 	nextbasin.suspectedlowpoints = make(map[int]int)
-	var nlp = nextbasin.suspectedlowpoints
 	for k, v := range b.suspectedlowpoints {
-		if nhmp[k] >= v {
+		if nextbasin.heightmap.numbers[k] >= v {
 			continue
 			// keep in suspected lowpoints, do nothing
 		} else {
-			nlp[k] = v
-			delete(nlp, k)
+			nextbasin.suspectedlowpoints[k] = v
+			delete(nextbasin.suspectedlowpoints, k)
 			//TODO: this also means that in the original findsuspectedlowpoints we will have to find a way to deal with lowpoints possibly already existing
 
 		}
@@ -67,6 +64,7 @@ func (b *basin) printLowPoints() {
 		print(v)
 
 	}
+	print("\n")
 }
 
 func (b *basin) printSuspectedLowPoints() {
@@ -102,16 +100,23 @@ func main() {
 	db.FindSuspectedLowPoints()
 	eb.FindSuspectedLowPoints()
 	// Print Suspected Lowpoints for Debugging Purposes
-	ab.printSuspectedLowPoints()
-	bb.printSuspectedLowPoints()
-	cb.printSuspectedLowPoints()
-	db.printSuspectedLowPoints()
-	eb.printSuspectedLowPoints()
+	// ab.printSuspectedLowPoints()
+	// bb.printSuspectedLowPoints()
+	// cb.printSuspectedLowPoints()
+	// db.printSuspectedLowPoints()
+	// eb.printSuspectedLowPoints()
 	// Find Actual LowPoints
-	// ab.FindActualLowpoints(&bb)
-	// bb.FindActualLowpoints(&cb)
-	// cb.FindActualLowpoints(&db)
-	// db.FindActualLowpoints(&eb)
+	ab.FindActualLowpoints(&bb)
+	bb.FindActualLowpoints(&cb)
+	cb.FindActualLowpoints(&db)
+	db.FindActualLowpoints(&eb)
+	// printLowPoints
+	ab.printLowPoints()
+	bb.printLowPoints()
+	cb.printLowPoints()
+	db.printLowPoints()
+	eb.printLowPoints()
+	// A great example of if this works is the 6 in D, if this is computing things properly it should be deleted as there is a lower number below it
 	// Print those out
 
 	// do the risk calculation
