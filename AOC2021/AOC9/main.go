@@ -2,47 +2,38 @@ package main
 
 type basin struct {
 	heightmap          queue
-	lowpoints          []int
+	lowpoints          map[int]int
 	suspectedlowpoints map[int]int
 }
 
 type queue struct {
-	// I'm not sure if I'm doing this right but I want to get a pointer to this slice
-	//TODO: Clean up my pointers to make them less all over the place
 	numbers []int
-	// pointer to a slice
 }
 
 func (q *queue) DeQueue() {
 	// takes a pointer
-	p := (q.numbers)[1:]
-	q.numbers = p
-	// https://gosamples.dev/cannot-take-address/ I think that what I'm having to do is use a helper variable
-
-	// q.numbers automatically dereferences, meaning I should be getting the values if I iterate
+	q.numbers = (q.numbers)[1:]
+	// We can do this because of automatic dereferencing
 }
 
 func (b *basin) FindSuspectedLowPoints() {
 	var lastnumber int
-	var heightmap = b.heightmap.numbers
 	b.suspectedlowpoints = make(map[int]int)
-	var lp = b.suspectedlowpoints
-	// Set lastnumber to the initial number
-	// premature optimization is the root of all evil
-
-	for i, v := range heightmap {
+	// Initialize the map
+	for i, v := range b.heightmap.numbers {
 		if i == 0 {
-			lastnumber = v
+			// if this is 0 we don't want to compare to nil
 			continue
-
 		}
-
-		lastnumber = heightmap[i-1]
-		if v > lastnumber && i != len(heightmap) {
-			lp[i-1] = heightmap[i-1]
+		lastnumber = b.heightmap.numbers[i-1]
+		if v > lastnumber && i != len(b.heightmap.numbers) {
+			// Checking to make sure we are not at the end
+			b.suspectedlowpoints[i-1] = b.heightmap.numbers[i-1]
+			// Add to suspected lowpoints if the current number is greater
 		} else {
-			if i == len(heightmap) && v < lastnumber {
-				lp[i-1] = heightmap[i-1]
+			if i == len(b.heightmap.numbers)-1 && v < lastnumber {
+				b.suspectedlowpoints[i] = b.heightmap.numbers[i]
+				// A check solely for the last number
 			}
 
 		}
@@ -52,9 +43,10 @@ func (b *basin) FindSuspectedLowPoints() {
 func (b *basin) FindActualLowpoints(nextbasin *basin) {
 	// var nlp = nextbasin.suspectedlowpoints
 	var nhmp = nextbasin.heightmap.numbers
-
-	for i, v := range b.suspectedlowpoints {
-		if nhmp[i] >= v {
+	nextbasin.suspectedlowpoints = make(map[int]int)
+	var nlp = nextbasin.suspectedlowpoints
+	for k, v := range b.suspectedlowpoints {
+		if nhmp[k] >= v {
 			continue
 			// keep in suspected lowpoints, do nothing
 		} else {
@@ -69,6 +61,13 @@ func (b *basin) FindActualLowpoints(nextbasin *basin) {
 
 func (b *basin) printLowPoints() {
 	for _, v := range b.lowpoints {
+		print(v)
+
+	}
+}
+
+func (b *basin) printSuspectedLowPoints() {
+	for _, v := range b.suspectedlowpoints {
 		print(v)
 
 	}
@@ -90,20 +89,22 @@ func main() {
 	cb.heightmap = c
 	db.heightmap = d
 	eb.heightmap = e
+	// TD: Group these all into some sort of collection so we can just iterate through and call things
 	ab.FindSuspectedLowPoints()
-	bb.FindSuspectedLowPoints()
-	cb.FindSuspectedLowPoints()
-	db.FindSuspectedLowPoints()
-	eb.FindSuspectedLowPoints()
-	ab.FindActualLowpoints(&bb)
-	bb.FindActualLowpoints(&cb)
-	cb.FindActualLowpoints(&db)
-	db.FindActualLowpoints(&eb)
-	ab.printLowPoints()
-	bb.printLowPoints()
-	cb.printLowPoints()
-	db.printLowPoints()
-	eb.printLowPoints()
+
+	// bb.FindSuspectedLowPoints()
+	// cb.FindSuspectedLowPoints()
+	// db.FindSuspectedLowPoints()
+	// eb.FindSuspectedLowPoints()
+	// ab.FindActualLowpoints(&bb)
+	// bb.FindActualLowpoints(&cb)
+	// cb.FindActualLowpoints(&db)
+	// db.FindActualLowpoints(&eb)
+	ab.printSuspectedLowPoints()
+	// bb.printLowPoints()
+	// cb.printLowPoints()
+	// db.printLowPoints()
+	// eb.printLowPoints()
 
 	// compute a list of heights depths
 	// Find suspected low points
