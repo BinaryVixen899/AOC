@@ -2,11 +2,18 @@ package main
 
 import ic "github.com/WAY29/icecream-go/icecream"
 import (
-	"bufio"
-	"fmt"
-	"io"
+	"bytes"
 	"os"
 )
+
+// Let's just put the notes here
+// Okay so this is putting 576 out which is way too high, let's try off by one
+// Okay that didn't work either, so my best guess is that this is something related to an edge case since the test data passes
+// And I'm going to assume that's either at the edges or if a number above or below is the same
+//5456789349886456890123985435578996543213456789656899996467789234989765442345789778999989652349879899
+// I'm thinking the issue here is that our current algorithm will not take this and say "9 is a suspected lowpoint"
+// If 5 was in the same position, it wouldn't do that either
+// Theoretically we shouldn't need to. It should be caught by other stuff. But....Let's do it anyway
 
 type basins struct {
 	basinslice []*basin
@@ -37,6 +44,7 @@ func (b *basin) FindSuspectedLowPoints() {
 	b.suspectedlowpoints = make(map[int]int)
 	// Initialize the map
 	for i, v := range b.heightmap.numbers {
+		// Checking for the first number
 		if i == 0 {
 			// if this is 0 we don't want to compare to nil
 			// So instead let's compare to i+1
@@ -45,11 +53,13 @@ func (b *basin) FindSuspectedLowPoints() {
 			}
 			continue
 		}
+		//Checking against the previous number
 		lastnumber = b.heightmap.numbers[i-1]
 		if i != len(b.heightmap.numbers)-1 && v < lastnumber && v < b.heightmap.numbers[i+1] {
 			// Checking to make sure we are not at the end
 			b.suspectedlowpoints[i] = b.heightmap.numbers[i]
 		} else {
+			// If we are at the end
 			if i == len(b.heightmap.numbers)-1 && v < lastnumber {
 				b.suspectedlowpoints[i] = b.heightmap.numbers[i]
 				// A check solely for the last number
@@ -69,9 +79,7 @@ func (b *basin) FindSuspectedLowPoints() {
 func (b *basins) FindActualLowpoints() {
 
 	for _, v := range b.basinslice {
-
 		bsn := v
-
 		for k, v := range bsn.suspectedlowpoints {
 			// I have no idea if this is true
 			if bsn.islastbasin == true {
@@ -128,8 +136,7 @@ func (b *basins) RiskCalculation() {
 		}
 
 	}
-	ic.Ic("Sum:" + "\n")
-	ic.Ic(sum)
+	ic.Ic("Sum: %p", sum)
 
 }
 
@@ -164,7 +171,27 @@ func (b *basins) LinkBasins() {
 	b.basinslice[0].isfirstbasin = true
 }
 
+// Stolen from GobyExample
+func check(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
+
 func (b *basins) CompBasins() {
+	dat, err := os.ReadFile("./puzzleinput.txt")
+	check(err)
+	lines := bytes.Split(dat, []byte{'\n'})
+	// clever trick for converting byte values to digits
+	// bytes.split will need to get rid of the newlines or call trim, if it doesn't I will have to
+	for _, line := range lines {
+		intslice := make([]int, len(line))
+		for i, b := range line {
+			intslice[i] = int(b - '0')
+		}
+		b.CreateBasin(intslice)
+		// create a new basin with intslice
+	}
 
 }
 
@@ -172,20 +199,12 @@ func main() {
 	var basins basins
 	ic.Enable()
 	ic.Ic("test")
-
-	basins.CreateBasin([]int{2, 1, 9, 9, 9, 4, 3, 2, 1, 0})
-	basins.CreateBasin([]int{3, 9, 8, 7, 8, 9, 4, 9, 2, 1})
-	basins.CreateBasin([]int{9, 8, 5, 6, 7, 8, 9, 8, 9, 2})
-	basins.CreateBasin([]int{8, 7, 6, 7, 8, 9, 6, 7, 8, 9})
-	basins.CreateBasin([]int{9, 8, 9, 9, 9, 6, 5, 6, 7, 8})
+	basins.CompBasins()
 	basins.LinkBasins()
-	//TD: compute a list of heights depths
-	// TD: Group these all into some sort of collection so we can just iterate through and call things
 	// Find Suspected Lowpoints
 
 	for _, v := range basins.basinslice {
 		v.FindSuspectedLowPoints()
-		//TD:Make "find actual lowpoints "
 	}
 	basins.FindActualLowpoints()
 
