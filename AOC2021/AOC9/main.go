@@ -1,15 +1,9 @@
 package main
 
 import ic "github.com/WAY29/icecream-go/icecream"
-import (
-	"bufio"
-	"fmt"
-	"io"
-	"os"
-)
 
 type basins struct {
-	basinslice []*basin
+	basinslice []basin
 }
 
 type basin struct {
@@ -140,7 +134,7 @@ func (b *basins) CreateBasin(numbers []int) {
 		// then we need something that can intelligently comp through basin
 		// I think we should be using a linkedlist here
 	}
-	b.basinslice = append(b.basinslice, &somebasin)
+	b.basinslice = append(b.basinslice, somebasin)
 
 }
 
@@ -149,15 +143,14 @@ func (b *basins) LinkBasins() {
 	//TD: So I think the issue here is that v is that basinslice is not a pointer
 	// Yeah the more I think about this the more I think the issue is basinslice, becuase like we're able to modify v just fine
 	// I still worry we've made copies though
-	for i, v := range b.basinslice {
+	for i, _ := range b.basinslice {
 		if i+1 < len(b.basinslice) {
-			test := b.basinslice[i+1]
-			v.nextbasin = test
+			b.basinslice[i].nextbasin = &b.basinslice[i+1]
 			// The reason this didn't work is it would set nextbasin to an address of a copy
 			// if I had test = the address of &b.basinslice[i+1]
-			b.basinslice[i+1].lastbasin = v
+			b.basinslice[i+1].lastbasin = &b.basinslice[i]
 		} else {
-			v.islastbasin = true
+			b.basinslice[i].islastbasin = true
 		}
 
 	}
