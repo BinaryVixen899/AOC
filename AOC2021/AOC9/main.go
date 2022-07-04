@@ -53,9 +53,9 @@ func (b *basin) FindSuspectedLowPoints() {
 
 	// Remove this in production
 	for _, v := range b.suspectedlowpoints {
-
 		ic.Ic("Suspected Lowpoints"+"\n", v)
 	}
+	ic.Ic("This is a new row")
 
 }
 
