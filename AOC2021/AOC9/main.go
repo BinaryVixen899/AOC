@@ -1,8 +1,11 @@
 package main
 
+import ic "github.com/WAY29/icecream-go/icecream"
+
 type basins struct {
 	basinslice []basin
 }
+
 type basin struct {
 	heightmap          queue
 	lowpoints          map[int]int
@@ -44,6 +47,12 @@ func (b *basin) FindSuspectedLowPoints() {
 			}
 
 		}
+	}
+
+	// Remove this in production
+	for _, v := range b.heightmap.numbers {
+
+		ic.Ic("Suspected Lowpoints"+"\n", v)
 	}
 
 }
@@ -109,53 +118,38 @@ func (b *basins) RiskCalculation() {
 
 }
 
-func main() {
-	var a, b, c, d, e queue
-	var ab, bb, cb, db, eb basin
-	var basins basins
+func (b *basins) CreateBasin(numbers []int) {
+	somebasin := basin{}
+	for _, v := range numbers {
+		somebasin.heightmap.numbers = append(somebasin.heightmap.numbers, v)
+		// then we need something that can intelligently comp through basin
+		// I think we should be using a linkedlist here
+	}
+	b.basinslice = append(b.basinslice, somebasin)
 
-	a.numbers = []int{2, 1, 9, 9, 9, 4, 3, 2, 1, 0}
-	b.numbers = []int{3, 9, 8, 7, 8, 9, 4, 9, 2, 1}
-	c.numbers = []int{9, 8, 5, 6, 7, 8, 9, 8, 9, 2}
-	d.numbers = []int{8, 7, 6, 7, 8, 9, 6, 7, 8, 9}
-	e.numbers = []int{9, 8, 9, 9, 9, 6, 5, 6, 7, 8}
-	// compute a list of heights depths
-	ab.heightmap = a
-	bb.heightmap = b
-	cb.heightmap = c
-	db.heightmap = d
-	eb.heightmap = e
-	eb.islastbasin = true
+}
+
+func main() {
+	var basins basins
+	ic.Enable()
+	basins.CreateBasin([]int{2, 1, 9, 9, 9, 4, 3, 2, 1, 0})
+	basins.CreateBasin([]int{3, 9, 8, 7, 8, 9, 4, 9, 2, 1})
+	basins.CreateBasin([]int{9, 8, 5, 6, 7, 8, 9, 8, 9, 2})
+	basins.CreateBasin([]int{8, 7, 6, 7, 8, 9, 6, 7, 8, 9})
+	basins.CreateBasin([]int{9, 8, 9, 9, 9, 6, 5, 6, 7, 8})
+	//TD: compute a list of heights depths
 	// TD: Group these all into some sort of collection so we can just iterate through and call things
 	// Find Suspected Lowpoints
-	ab.FindSuspectedLowPoints()
-	bb.FindSuspectedLowPoints()
-	cb.FindSuspectedLowPoints()
-	db.FindSuspectedLowPoints()
-	eb.FindSuspectedLowPoints()
-	// Print Suspected Lowpoints for Debugging Purposes
-	print("Suspected Lowpoints" + "\n")
-	ab.printSuspectedLowPoints()
-	bb.printSuspectedLowPoints()
-	cb.printSuspectedLowPoints()
-	db.printSuspectedLowPoints()
-	eb.printSuspectedLowPoints()
+	ic.Enable()
 
-	// Find Actual LowPoints
-	bb.FindActualLowpoints(&cb, &ab)
-	cb.FindActualLowpoints(&db, &bb)
-	db.FindActualLowpoints(&eb, &cb)
-	eb.FindActualLowpointsForLastBasin(&db)
+	for _, v := range basins.basinslice {
+		v.FindSuspectedLowPoints()
+		v.FindActualLowpoints()
+		//TD:Make "find actual lowpoints "
+	}
 
-	// printLowPoints
-	print("Actual Lowpoints" + "\n")
-	ab.printSuspectedLowPoints()
-	bb.printSuspectedLowPoints()
-	cb.printSuspectedLowPoints()
-	db.printSuspectedLowPoints()
-	eb.printSuspectedLowPoints()
-	basins.basinslice = append(basins.basinslice, ab, bb, cb, db, eb)
-	// TD: Change this so we are no longer using a copy
+	//WWID: Print Suspected Lowpoints for Debugging Purposes (except inside of FindSuspectedLowPoints because why wouldn't I do that?)
+
 	// do the risk calculation
 	basins.RiskCalculation()
 
