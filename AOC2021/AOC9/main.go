@@ -14,6 +14,10 @@ import (
 // I'm thinking the issue here is that our current algorithm will not take this and say "9 is a suspected lowpoint"
 // If 5 was in the same position, it wouldn't do that either
 // Theoretically we shouldn't need to. It should be caught by other stuff. But....Let's do it anyway
+// Okay, still doesn't work, in fact we get a larger number\
+// Fuck it, to do this I would need to be able to output a highlighted one
+// So let's just try Liz's version and that way we can see if we got a difference
+// Got it with temppuzzle input, the up and down checks don't seem to be working
 
 type basins struct {
 	basinslice []*basin
@@ -54,6 +58,7 @@ func (b *basin) FindSuspectedLowPoints() {
 			continue
 		}
 		//Checking against the previous number
+		// Ignoring middle numbers
 		lastnumber = b.heightmap.numbers[i-1]
 		if i != len(b.heightmap.numbers)-1 && v < lastnumber && v < b.heightmap.numbers[i+1] {
 			// Checking to make sure we are not at the end
@@ -99,7 +104,13 @@ func (b *basins) FindActualLowpoints() {
 
 			if bsn.isfirstbasin == true {
 				// We should be fine to skip this because we're handling it in the next one
-				continue
+				if bsn.nextbasin.heightmap.numbers[k] <= v {
+					delete(bsn.suspectedlowpoints, k)
+				} else {
+					continue
+				}
+
+				// THIS IS IT, THIS IS BAD LOGIC
 
 			}
 
