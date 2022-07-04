@@ -15,7 +15,7 @@ type queue struct {
 }
 
 func (q *queue) DeQueue() {
-	// takes a pointer
+	// Pointer reciever
 	q.numbers = (q.numbers)[1:]
 	// We can do this because of automatic dereferencing
 }
