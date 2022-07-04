@@ -90,13 +90,16 @@ func (b *basins) FindActualLowpoints() {
 			}
 
 			// This is SUPPOSED to do the vertical checking
-			// TODO: We never hit lastbasin
-			if bsn.nextbasin.heightmap.numbers[k] <= v || bsn.lastbasin.heightmap.numbers[k] <= v {
-				delete(bsn.suspectedlowpoints, k)
-				// keep in suspected lowpoints, do nothing
-			} else {
-				continue
-				//TODO: this also means that in the original findsuspectedlowpoints we will have to find a way to deal with lowpoints possibly already existing
+			// TODO: WE're getting to this with lastbasin and that's what's causing this
+			if bsn.islastbasin == false {
+				if bsn.nextbasin.heightmap.numbers[k] <= v || bsn.lastbasin.heightmap.numbers[k] <= v {
+					delete(bsn.suspectedlowpoints, k)
+					// keep in suspected lowpoints, do nothing
+				} else {
+					continue
+					//TODO: this also means that in the original findsuspectedlowpoints we will have to find a way to deal with lowpoints possibly already existing
+
+				}
 
 			}
 
@@ -144,6 +147,7 @@ func (b *basins) LinkBasins() {
 		if i+1 < len(b.basinslice) {
 			test := b.basinslice[i+1]
 			v.nextbasin = test
+			b.basinslice[i+1].lastbasin = v
 		} else {
 			v.islastbasin = true
 		}
@@ -155,6 +159,7 @@ func (b *basins) LinkBasins() {
 func main() {
 	var basins basins
 	ic.Enable()
+	ic.Ic("test")
 
 	basins.CreateBasin([]int{2, 1, 9, 9, 9, 4, 3, 2, 1, 0})
 	basins.CreateBasin([]int{3, 9, 8, 7, 8, 9, 4, 9, 2, 1})
@@ -165,7 +170,6 @@ func main() {
 	//TD: compute a list of heights depths
 	// TD: Group these all into some sort of collection so we can just iterate through and call things
 	// Find Suspected Lowpoints
-	ic.Enable()
 
 	for _, v := range basins.basinslice {
 		v.FindSuspectedLowPoints()
