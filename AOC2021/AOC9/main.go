@@ -3,7 +3,7 @@ package main
 import ic "github.com/WAY29/icecream-go/icecream"
 
 type basins struct {
-	basinslice []basin
+	basinslice []*basin
 }
 
 type basin struct {
@@ -66,7 +66,7 @@ func (b *basins) FindActualLowpoints() {
 		bsn := v
 
 		for k, v := range bsn.suspectedlowpoints {
-
+			// I have no idea if this is true
 			if bsn.islastbasin == true {
 				for k, v := range bsn.suspectedlowpoints {
 					if bsn.lastbasin.heightmap.numbers[k] <= v {
@@ -82,6 +82,7 @@ func (b *basins) FindActualLowpoints() {
 
 			}
 
+			// This is SUPPOSED to do the vertical checking
 			if bsn.nextbasin.heightmap.numbers[k] <= v || bsn.lastbasin.heightmap.numbers[k] <= v {
 				delete(bsn.suspectedlowpoints, k)
 				// keep in suspected lowpoints, do nothing
@@ -93,24 +94,13 @@ func (b *basins) FindActualLowpoints() {
 
 		}
 
-	}
-}
-
-func (b *basin) printLowPoints() {
-	for _, v := range b.lowpoints {
-		print(v)
+		for _, v := range bsn.suspectedlowpoints {
+			ic.Ic("actual Lowpoints"+"\n", v)
+		}
+		ic.Ic("This is a new row")
 
 	}
-	print("\n")
-}
 
-func (b *basin) printSuspectedLowPoints() {
-
-	for _, v := range b.suspectedlowpoints {
-		print(v)
-
-	}
-	print("\n")
 }
 
 func (b *basins) RiskCalculation() {
@@ -133,17 +123,23 @@ func (b *basins) CreateBasin(numbers []int) {
 		// then we need something that can intelligently comp through basin
 		// I think we should be using a linkedlist here
 	}
-	b.basinslice = append(b.basinslice, somebasin)
+	b.basinslice = append(b.basinslice, &somebasin)
 
 }
 
 func (b *basins) LinkBasins() {
 	// TD: Find a way to do this for the last basin
+	//TD: So I think the issue here is that v is that basinslice is not a pointer
+	// Yeah the more I think about this the more I think the issue is basinslice, becuase like we're able to modify v just fine
+	// I still worry we've made copies though
 	for i, v := range b.basinslice {
-		if i < len(b.basinslice) {
-			v.nextbasin = &b.basinslice[i+1]
+		if i+1 < len(b.basinslice) {
+			test := b.basinslice[i+1]
+			v.nextbasin = test
+			b.basinslice[i] = v
 		} else {
 			v.islastbasin = true
+			b.basinslice[i] = v
 		}
 
 	}
@@ -158,6 +154,7 @@ func main() {
 	basins.CreateBasin([]int{9, 8, 5, 6, 7, 8, 9, 8, 9, 2})
 	basins.CreateBasin([]int{8, 7, 6, 7, 8, 9, 6, 7, 8, 9})
 	basins.CreateBasin([]int{9, 8, 9, 9, 9, 6, 5, 6, 7, 8})
+	basins.LinkBasins()
 	//TD: compute a list of heights depths
 	// TD: Group these all into some sort of collection so we can just iterate through and call things
 	// Find Suspected Lowpoints
