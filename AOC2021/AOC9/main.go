@@ -136,10 +136,8 @@ func (b *basins) LinkBasins() {
 		if i+1 < len(b.basinslice) {
 			test := b.basinslice[i+1]
 			v.nextbasin = test
-			b.basinslice[i] = v
 		} else {
 			v.islastbasin = true
-			b.basinslice[i] = v
 		}
 
 	}
