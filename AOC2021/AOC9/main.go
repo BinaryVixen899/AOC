@@ -10,6 +10,8 @@ type basin struct {
 	heightmap          queue
 	lowpoints          map[int]int
 	suspectedlowpoints map[int]int
+	nextbasin          *basin
+	lastbasin          *basin
 	islastbasin        bool
 }
 
@@ -56,30 +58,38 @@ func (b *basin) FindSuspectedLowPoints() {
 	}
 
 }
-func (b *basin) FindActualLowpoints(nextbasin *basin, previousbasin *basin) {
 
-	for k, v := range b.suspectedlowpoints {
-		if nextbasin.heightmap.numbers[k] <= v || previousbasin.heightmap.numbers[k] <= v {
-			delete(b.suspectedlowpoints, k)
-			// keep in suspected lowpoints, do nothing
-		} else {
-			continue
-			//TODO: this also means that in the original findsuspectedlowpoints we will have to find a way to deal with lowpoints possibly already existing
+func (b *basins) FindActualLowpoints() {
 
-		}
+	for _, v := range b.basinslice {
 
-	}
-}
+		bsn := v
 
-func (b *basin) FindActualLowpointsForLastBasin(previousbasin *basin) {
+		for k, v := range bsn.suspectedlowpoints {
 
-	for k, v := range b.suspectedlowpoints {
-		if previousbasin.heightmap.numbers[k] <= v {
-			delete(b.suspectedlowpoints, k)
-			// keep in suspected lowpoints, do nothing
-		} else {
-			continue
-			//TODO: this also means that in the original findsuspectedlowpoints we will have to find a way to deal with lowpoints possibly already existing
+			if bsn.islastbasin == true {
+				for k, v := range bsn.suspectedlowpoints {
+					if bsn.lastbasin.heightmap.numbers[k] <= v {
+						delete(bsn.suspectedlowpoints, k)
+						// keep in suspected lowpoints, do nothing
+					} else {
+						continue
+						//TODO: this also means that in the original findsuspectedlowpoints we will have to find a way to deal with lowpoints possibly already existing
+
+					}
+
+				}
+
+			}
+
+			if bsn.nextbasin.heightmap.numbers[k] <= v || bsn.lastbasin.heightmap.numbers[k] <= v {
+				delete(bsn.suspectedlowpoints, k)
+				// keep in suspected lowpoints, do nothing
+			} else {
+				continue
+				//TODO: this also means that in the original findsuspectedlowpoints we will have to find a way to deal with lowpoints possibly already existing
+
+			}
 
 		}
 
@@ -107,14 +117,12 @@ func (b *basins) RiskCalculation() {
 	var sum int
 	for _, b := range b.basinslice {
 		for _, v := range b.suspectedlowpoints {
-			print(v + 1)
 			sum = sum + (v + 1)
 		}
 
 	}
-	print("\n")
-	print("Sum:" + "\n")
-	print(sum)
+	ic.Ic("Sum:" + "\n")
+	ic.Ic(sum)
 
 }
 
@@ -129,9 +137,22 @@ func (b *basins) CreateBasin(numbers []int) {
 
 }
 
+func (b *basins) LinkBasins() {
+	// TD: Find a way to do this for the last basin
+	for i, v := range b.basinslice {
+		if i < len(b.basinslice) {
+			v.nextbasin = &b.basinslice[i+1]
+		} else {
+			v.islastbasin = true
+		}
+
+	}
+}
+
 func main() {
 	var basins basins
 	ic.Enable()
+
 	basins.CreateBasin([]int{2, 1, 9, 9, 9, 4, 3, 2, 1, 0})
 	basins.CreateBasin([]int{3, 9, 8, 7, 8, 9, 4, 9, 2, 1})
 	basins.CreateBasin([]int{9, 8, 5, 6, 7, 8, 9, 8, 9, 2})
@@ -144,11 +165,9 @@ func main() {
 
 	for _, v := range basins.basinslice {
 		v.FindSuspectedLowPoints()
-		v.FindActualLowpoints()
 		//TD:Make "find actual lowpoints "
 	}
-
-	//WWID: Print Suspected Lowpoints for Debugging Purposes (except inside of FindSuspectedLowPoints because why wouldn't I do that?)
+	basins.FindActualLowpoints()
 
 	// do the risk calculation
 	basins.RiskCalculation()
