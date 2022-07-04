@@ -1,6 +1,12 @@
 package main
 
 import ic "github.com/WAY29/icecream-go/icecream"
+import (
+	"bufio"
+	"fmt"
+	"io"
+	"os"
+)
 
 type basins struct {
 	basinslice []*basin
@@ -147,6 +153,8 @@ func (b *basins) LinkBasins() {
 		if i+1 < len(b.basinslice) {
 			test := b.basinslice[i+1]
 			v.nextbasin = test
+			// The reason this didn't work is it would set nextbasin to an address of a copy
+			// if I had test = the address of &b.basinslice[i+1]
 			b.basinslice[i+1].lastbasin = v
 		} else {
 			v.islastbasin = true
@@ -154,6 +162,10 @@ func (b *basins) LinkBasins() {
 
 	}
 	b.basinslice[0].isfirstbasin = true
+}
+
+func (b *basins) CompBasins() {
+
 }
 
 func main() {
