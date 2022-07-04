@@ -52,7 +52,7 @@ func (b *basin) FindSuspectedLowPoints() {
 	}
 
 	// Remove this in production
-	for _, v := range b.heightmap.numbers {
+	for _, v := range b.suspectedlowpoints {
 
 		ic.Ic("Suspected Lowpoints"+"\n", v)
 	}
