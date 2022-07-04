@@ -13,6 +13,7 @@ type basin struct {
 	nextbasin          *basin
 	lastbasin          *basin
 	islastbasin        bool
+	isfirstbasin       bool
 }
 
 type queue struct {
@@ -82,7 +83,14 @@ func (b *basins) FindActualLowpoints() {
 
 			}
 
+			if bsn.isfirstbasin == true {
+				// We should be fine to skip this because we're handling it in the next one
+				continue
+
+			}
+
 			// This is SUPPOSED to do the vertical checking
+			// TODO: We never hit lastbasin
 			if bsn.nextbasin.heightmap.numbers[k] <= v || bsn.lastbasin.heightmap.numbers[k] <= v {
 				delete(bsn.suspectedlowpoints, k)
 				// keep in suspected lowpoints, do nothing
@@ -141,6 +149,7 @@ func (b *basins) LinkBasins() {
 		}
 
 	}
+	b.basinslice[0].isfirstbasin = true
 }
 
 func main() {
