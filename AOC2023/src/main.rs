@@ -1,5 +1,5 @@
 mod days;
-use day1lib;
+// use day1lib;
 use days::*;
 
 fn main() {

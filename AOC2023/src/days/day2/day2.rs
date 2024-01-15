@@ -6,7 +6,7 @@ struct Game {
 }
 
 impl Game {
-    fn DeterminePossibility(&mut self, mut bag: &mut Bag, id: i32) {
+    fn determine_possibility(&mut self, mut bag: &mut Bag, id: i32) {
         for turn in &self.turns {
             if turn.red < bag.red && turn.green < bag.green && turn.blue < bag.blue {
             } else {
@@ -151,7 +151,7 @@ pub fn part1() {
     let mut games = [game1, game2, game3, game4, game5];
 
     for (id, game) in games.iter_mut().enumerate() {
-        game.DeterminePossibility(&mut mybag, id.try_into().unwrap());
+        game.determine_possibility(&mut mybag, id.try_into().unwrap());
     }
     println!("The sum of the ids is {}", mybag.score);
 }
