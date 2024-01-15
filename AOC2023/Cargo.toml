@@ -1,0 +1,19 @@
+[package]
+name = "AOC2023"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+# [workspace]
+
+[dependencies]
+day1lib = { path = "day1" }
+# [lib]
+# name = "day1lib"
+# path = "src/days/day1/src/lib.rs"
+
+
+# [[bin]]
+# name = "AOC2023"
+# path = "src/main.rs"
