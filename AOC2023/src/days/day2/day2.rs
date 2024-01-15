@@ -1,16 +1,25 @@
 // static PUZZLE_INPUT: str = "awerawera";
 
+#[derive(Default)]
 struct Game {
     turns: Vec<Turn>,
     possible: Option<bool>,
+    id: Option<i32>,
 }
 
 impl Game {
     fn determine_possibility(&mut self, mut bag: &mut Bag, id: i32) {
         for turn in &self.turns {
-            if turn.red < bag.red && turn.green < bag.green && turn.blue < bag.blue {
+            if turn.red <= bag.red && turn.green <= bag.green && turn.blue <= bag.blue {
             } else {
                 println!("Game #{} is not possible!", id);
+                println!(
+                    "tr:{} br:{}
+                    tg:{} bg:{}
+                    tb:{} bb{}
+                ",
+                    turn.red, bag.red, turn.green, bag.green, turn.blue, bag.blue
+                );
                 self.possible = Some(false);
                 return;
             }
@@ -63,6 +72,7 @@ pub fn part1() {
             ]
         },
         possible: None,
+        id: None,
     };
     let game2 = Game {
         turns: {
@@ -75,7 +85,7 @@ pub fn part1() {
                 Turn {
                     red: 1,
                     blue: 4,
-                    green: 0,
+                    green: 3,
                 },
                 Turn {
                     red: 0,
@@ -85,6 +95,7 @@ pub fn part1() {
             ]
         },
         possible: None,
+        id: None,
     };
     let game3 = Game {
         turns: {
@@ -107,6 +118,7 @@ pub fn part1() {
             ]
         },
         possible: None,
+        id: None,
     };
     let game4 = Game {
         turns: {
@@ -129,6 +141,7 @@ pub fn part1() {
             ]
         },
         possible: None,
+        ..Default::default()
     };
     let game5 = Game {
         turns: {
@@ -146,12 +159,13 @@ pub fn part1() {
             ]
         },
         possible: None,
+        ..Default::default()
     };
 
     let mut games = [game1, game2, game3, game4, game5];
-
     for (id, game) in games.iter_mut().enumerate() {
-        game.determine_possibility(&mut mybag, id.try_into().unwrap());
+        game.id = Some(id as i32 + 1);
+        game.determine_possibility(&mut mybag, game.id.unwrap());
     }
     println!("The sum of the ids is {}", mybag.score);
 }
