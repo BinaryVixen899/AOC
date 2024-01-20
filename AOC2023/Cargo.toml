@@ -9,6 +9,8 @@ edition = "2021"
 
 [dependencies]
 day1lib = { path = "day1" }
+regex = "1.10.2"
+strum = { version = "0.25.0", features = ["strum_macros", "derive"] }
 # [lib]
 # name = "day1lib"
 # path = "src/days/day1/src/lib.rs"
