@@ -2,11 +2,13 @@ use std::{default, str::FromStr};
 // static PUZZLE_INPUT: str = "awerawera";
 use strum::{Display, EnumString};
 
-#[derive(Default)]
 pub struct Game {
     turns: Vec<Turn>,
     possible: Option<bool>,
     id: Option<i32>,
+    required_red_cubes: Colour,
+    required_green_cubes: Colour,
+    required_blue_cubes: Colour,
 }
 
 impl Game {
@@ -36,6 +38,32 @@ impl Game {
         }
         self.possible = Some(true);
         bag.score += id;
+    }
+
+    fn calculate_required_cubes(&mut self) {
+        for turn in &self.turns {
+            if turn.red_cubes >= self.required_red_cubes {
+                self.required_red_cubes = turn.red_cubes
+            }
+            if turn.green_cubes >= self.required_green_cubes {
+                self.required_green_cubes = turn.green_cubes
+            }
+            if turn.blue_cubes >= self.required_blue_cubes {
+                self.required_blue_cubes = turn.blue_cubes
+            }
+        }
+    }
+}
+impl Default for Game {
+    fn default() -> Self {
+        return Game {
+            turns: vec![Turn::default()],
+            possible: None,
+            id: None,
+            required_red_cubes: Colour::Red(0),
+            required_green_cubes: Colour::Green(0),
+            required_blue_cubes: Colour::Blue(0),
+        };
     }
 }
 
@@ -109,7 +137,7 @@ pub fn convert_input(input: &str) -> Vec<Game> {
     return games;
 }
 
-#[derive(Display, Debug, PartialEq, EnumString, PartialOrd)]
+#[derive(Display, Debug, PartialEq, EnumString, PartialOrd, Clone, Copy)]
 enum Colour {
     #[strum(serialize = "red", serialize = "r")]
     Red(i32),
@@ -119,8 +147,22 @@ enum Colour {
     Blue(i32),
 }
 
+impl Into<i32> for Colour {
+    fn into(self) -> i32 {
+        match self {
+            Colour::Red(count) => return count,
+            Colour::Green(count) => return count,
+            Colour::Blue(count) => return count,
+        }
+    }
+}
 pub fn part1() {
     // print!(PUZZLE_INPUT);
+    // let input = "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
+    // Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue
+    // Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red
+    // Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red
+    // Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green";
     let input = "Game 1: 1 green, 1 blue, 1 red; 3 green, 1 blue, 1 red; 4 green, 3 blue, 1 red; 4 green, 2 blue, 1 red; 3 blue, 3 green
     Game 2: 9 blue, 7 red; 5 blue, 6 green, 1 red; 2 blue, 10 red, 9 green; 3 green, 14 red, 5 blue; 8 red, 3 blue, 4 green; 8 green, 14 blue, 10 red
     Game 3: 11 green, 8 blue, 7 red; 3 green, 4 red, 9 blue; 3 red, 4 green, 8 blue; 11 green, 1 red, 16 blue
@@ -234,6 +276,29 @@ pub fn part1() {
         game.determine_possibility(&mut mybag, game.id.unwrap());
     }
     println!("The sum of the ids is {}", mybag.score);
+    part2(games);
 }
 
-pub fn part2() {}
+pub fn part2(games: Vec<Game>) {
+    let mut sum: i32 = 0;
+    for mut game in games {
+        game.calculate_required_cubes();
+        let red_cubes: i32 = game.required_red_cubes.into();
+        let green_cubes: i32 = game.required_green_cubes.into();
+        let blue_cubes: i32 = game.required_blue_cubes.into();
+        let power: i32 = red_cubes * green_cubes * blue_cubes;
+        println!(
+            "required_red_cubes:{}\n\
+            required_green_cubes:{}\n\
+            required_blue_cubes:{}
+        ",
+            red_cubes, green_cubes, blue_cubes
+        );
+        sum += power
+    }
+    println!("The power of the cubes is {}", sum)
+
+    // figure out the largest number of each type of cube played per game. This is the minimum
+    // then multiply these together, that is the power for the game
+    // then add them all together
+}
